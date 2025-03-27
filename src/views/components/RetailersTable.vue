@@ -75,7 +75,7 @@ export default {
               </td>
               <td>
                 <img
-                    src="https://static.vecteezy.com/system/resources/previews/020/662/330/non_2x/store-icon-logo-illustration-vector.jpg"
+                    :src="retailer.logo"
                     class="avatar avatar-m me-3"
                     :alt="`${retailer.title}s logo`"
                 />

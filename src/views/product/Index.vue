@@ -1,31 +1,33 @@
-<template>
-    <div class="pt-6 pb-4 flex-grow-1">
-        <RetailersTable :retailers="retailers" />
-    </div>
-</template>
-
 <script>
-    import RetailersTable from '../components/RetailersTable.vue';
-    import { mapGetters } from "vuex";
+    import ProductsTable from '../components/ProductsTable.vue';
+    import { mapGetters, mapActions } from "vuex";
+    import { fetchProducts } from "@/services/productsService";
 
     export default {
-        name: "Retailer Index",
-        data() {
-            return {
-                
+        name: "Product Index",
+        async mounted() {
+            const res = await fetchProducts();
+
+            if (res.success) {
+                this.setProducts(res.data);
             }
         },
         components: {
-            RetailersTable,
+            ProductsTable,
         },
         computed: {
             ...mapGetters({
-                retailers: 'retailers/getRetailers'
+                products: 'products/getProducts'
             })
+        },
+        methods: {
+            ...mapActions('products', ['setProducts'])
         }
     }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<template>
+    <div class="pt-6 pb-4 flex-grow-1">
+        <ProductsTable :products="products" />
+    </div>
+</template>
