@@ -7,7 +7,6 @@ import RTL from "../views/Rtl.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
-import Product from "../views/product/Index.vue";
 
 const routes = [
   {
@@ -18,7 +17,32 @@ const routes = [
   {
     path: "/products",
     name: "Products",
-    component: Product,
+    component: () => import("../views/product/Index.vue"),
+  },
+  {
+    path: "/products/create",
+    name: "Products / Create",
+    component: () => import("../views/product/Create.vue"),
+  },
+  {
+    path: "/products/edit/:id",
+    name: "Products / Edit",
+    component: () => import("../views/product/Edit.vue"),
+  },
+  {
+    path: "/retailers",
+    name: "Retailers",
+    component: () => import("../views/retailer/Index.vue"),
+  },
+  {
+    path: "/retailers/create",
+    name: "Retailers / Create",
+    component: () => import("../views/retailer/Create.vue"),
+  },
+  {
+    path: "/retailers/edit/:id",
+    name: "Retailers / Edit",
+    component: () => import("../views/retailer/Edit.vue"),
   },
   {
     path: "/dashboard-default",
@@ -59,6 +83,12 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'notFound',
+    component: () => import("../views/notFound/Index.vue"),
+    meta: { title: 'Shop Scrape | Page Not Found' },
   },
 ];
 

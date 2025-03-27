@@ -1,20 +1,38 @@
-<script setup>
-defineProps({
-  btnBackground: {
-    type: String,
-    default: "",
+<script>
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+  props: {
+    btnBackground: {
+      type: String,
+      default: "",
+    },
+    isBlur: {
+      type: String,
+      default: "",
+    },
+    darkMode: {
+      type: Boolean,
+      default: false,
+    },
+    isBtn: {
+      type: String,
+      default: "bg-gradient-light",
+    },
   },
-  isBlur: {
-    type: String,
-    default: "",
+
+  methods: {
+    ...mapActions("auth", ["logout"]),
+    handleLogout() {
+      this.logout().then(() => this.$router.push({ name: "Signin" }));
+    },
   },
-  darkMode: {
-    type: Boolean,
-    default: false,
+  computed: {
+    ...mapGetters("auth", ["isAuthenticated"]),
   },
-  isBtn: { type: String, default: "bg-gradient-light" },
-});
+};
 </script>
+
 <template>
   <!-- Navbar -->
   <nav
@@ -79,6 +97,14 @@ defineProps({
               Sign Up
             </router-link>
           </li>
+
+          <li class="nav-item" v-show="isAuthenticated">
+            <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+            <form method="post" @submit.prevent="handleLogout">
+              <button type="submit" class="router-link">Logout</button>
+            </form>
+          </li>
+
           <li class="nav-item">
             <router-link class="nav-link me-2" to="/signin">
               <i

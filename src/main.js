@@ -14,18 +14,20 @@ appInstance.use(router);
 appInstance.use(ArgonDashboard);
 
 axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
 axios.interceptors.response.use(
-   response => response,
-   err => {
-      // Token has expired or user is unauthorized
-      if (err.response && err.response.status === 401) {
-         store.dispatch('auth/clearExpiredSession');
-         router.push({ name: 'login.index' });
-      } else if (err.response && err.response.status === 403) {
-         router.push({ name: 'forbidden' });
-      }
-      return Promise.reject(err);
-   }
+    response => response,
+    err => {
+        // Token has expired or user is unauthorized
+        if (err.response && err.response.status === 401) {
+            store.dispatch('auth/clearExpiredSession');
+            router.push({ name: 'Signin' });
+        } else if (err.response && err.response.status === 403) {
+            router.push({ name: 'forbidden' });
+        }
+        return Promise.reject(err);
+    }
 );
 appInstance.config.globalProperties.axios = axios;
 

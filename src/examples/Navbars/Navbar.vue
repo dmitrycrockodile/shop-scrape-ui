@@ -1,5 +1,5 @@
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import Breadcrumbs from "../Breadcrumbs.vue";
 
 export default {
@@ -13,6 +13,7 @@ export default {
   },
   computed: {
     ...mapState("ui", ["isRTL"]),
+    ...mapGetters("auth", ["isAuthenticated"]),
     
     currentRouteName() {
       return this.$route.name;
@@ -23,6 +24,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions("auth", ["logout"]),
+    handleLogout() {
+        this.logout().then(() => this.$router.push({ name: "Signin" }));
+    },
     minimizeSidebar() {
       this.$store.commit("sidebarMinimize");
     },
@@ -73,16 +78,19 @@ export default {
           </div>
         </div>
         <ul class="navbar-nav justify-content-end">
-          <li class="nav-item d-flex align-items-center">
+          <li v-if="!isAuthenticated" class="nav-item d-flex align-items-center">
             <router-link
               :to="{ name: 'Signin' }"
               class="px-0 nav-link font-weight-bold text-white"
-              target="_blank"
             >
-              <i class="fa fa-user" :class="isRTL ? 'ms-sm-2' : 'me-sm-2'"></i>
-              <span v-if="isRTL" class="d-sm-inline d-none">يسجل دخول</span>
-              <span v-else class="d-sm-inline d-none">Sign In</span>
+              <i class="fa fa-user me-sm-2"></i>
+              <span class="d-sm-inline d-none">Sign In</span>
             </router-link>
+          </li>
+          <li v-if="isAuthenticated" class="nav-item">
+            <form method="post" @submit.prevent="handleLogout">
+              <button type="submit" class="nav-link font-weight-bold text-white bg-transparent border-0">Logout</button>
+            </form>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a

@@ -64,7 +64,7 @@ export default {
   <sidenav v-if="showSidenav" />
 
   <main
-    class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
+    class="main-content position-relative max-height-vh-100 h-100 border-radius-lg d-flex flex-column min-vh-100"
   >
     <!-- nav -->
 
