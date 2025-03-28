@@ -25,7 +25,6 @@
                 },
                 maxImages: 5,
                 newImages: [],
-                imagesRefs: [],
                 loading: false,
                 error: null,
                 availablePackSizes: [

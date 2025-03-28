@@ -3,12 +3,13 @@ import router from '../router/index';
 import { handleResponse, handleError } from "../utils/helpers";
 import { BASE_API_URL } from "../utils/constants";
 
-export const fetchProducts = async () => {
+export const fetchProducts = async (dataPerPage, page) => {
     try {
         const res = await axios.post(`${BASE_API_URL}/products`, {
-            dataPerPage: 10,
-            page: 1
+            dataPerPage,
+            page
         });
+        
         return handleResponse(res);
     } catch (err) {
         return handleError(err);
@@ -48,21 +49,25 @@ export const updateProduct = async (data, images, id) => {
     }
 }
 
-export const createProduct = async (data, logo) => {
+export const createProduct = async (data, images) => {
     try {
         const formData = new FormData();
 
-        formData.append('title', data.title);
-        formData.append('url', data.url);
-        formData.append('currency_id', data.currency_id);
-        if (logo) {
-            formData.append('logo', logo);
+        formData.append("title", data.title);
+        formData.append("description", data.description);
+        formData.append("manufacturer_part_number", data.manufacturer_part_number);
+        formData.append("pack_size_id", data.pack_size_id);
+        if (images[0]) {
+            images.forEach(image => {
+                formData.append("images[]", image);
+            });
         }
 
-        const res = await axios.post(`${BASE_API_URL}/retailers`, formData);
+        const res = await axios.post(`${BASE_API_URL}/products/store`, formData);
 
         return handleResponse(res);
     } catch (err) {
+        console.error(err);
         if (err.response.status === 404) {
             router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
         }

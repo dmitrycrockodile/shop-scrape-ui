@@ -1,11 +1,16 @@
 const state = {
-    products: JSON.parse(localStorage.getItem('products')) || null,
+    products: JSON.parse(localStorage.getItem('products')) || [],
+    meta: JSON.parse(localStorage.getItem('meta')) || [],
 };
 
 const mutations = {
     SET_PRODUCTS(state, products) {
         state.products = products;
         localStorage.setItem('products', JSON.stringify(products));
+    },
+    SET_META(state, meta) {
+        state.meta = meta;
+        localStorage.setItem('meta', JSON.stringify(meta));
     },
     ADD_PRODUCT(state, product) {
         state.products.push(product);
@@ -24,6 +29,14 @@ const actions = {
     async setProducts({ commit }, products) {
         try {
             commit("SET_PRODUCTS", products);
+        } catch (error) {
+            console.error("Error setting products:", error);
+        } 
+    },
+
+    async setMetaData({ commit }, meta) {
+        try {
+            commit("SET_META", meta);
         } catch (error) {
             console.error("Error setting products:", error);
         } 
@@ -64,6 +77,9 @@ const actions = {
 const getters = {
     getProducts(state) {
         return state.products ? state.products : [];
+    },
+    getMetadata(state) {
+        return state.meta ? state.meta : [];
     }
 };
 
