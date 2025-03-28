@@ -25,15 +25,22 @@ export const updateProduct = async (data, images, id) => {
         formData.append("pack_size_id", data.pack_size_id);
         formData.append('_method', 'put');
 
-        if (images[0].files[0]) {
+        const imageUrls = [];
+        if (data.images.length) {
+            data.images.forEach(image => imageUrls.push(image.file_url))
+            formData.append("image_urls", JSON.stringify(imageUrls));
+        }
+
+        if (images[0]) {
             images.forEach(image => {
-                formData.append("images[]", image.files[0]);
+                formData.append("images[]", image);
             });
         }
 
         const res = await axios.post(`${BASE_API_URL}/products/${id}`, formData);
         return handleResponse(res);
     } catch (err) {
+        console.error(err);
         if (err.response.status === 404) {
             router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
         }

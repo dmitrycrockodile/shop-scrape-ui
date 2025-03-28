@@ -24,6 +24,7 @@
                     images: []
                 },
                 maxImages: 5,
+                newImages: [],
                 imagesRefs: [],
                 loading: false,
                 error: null,
@@ -41,6 +42,9 @@
             },
             selectedProduct() {
                 return this.getProducts.find(product => product.id == this.productId);
+            },
+            totalImagesCount() {
+                return this.updateProductForm.images.length + this.newImages.length;
             }
         },
         watch: {
@@ -55,6 +59,7 @@
                             pack_size_id: newProduct.pack_size.id,
                             images: newProduct.images || []
                         };
+                        this.newImages = [];
                     }
                 }
             }
@@ -62,37 +67,43 @@
         methods: {
             ...mapActions("products", ["updateProduct"]),
             async handleUpdate() {
-                const res = await updateProduct(this.updateProductForm, this.imagesRefs, this.productId);
+                const res = await updateProduct(this.updateProductForm, this.newImages, this.productId);
 
                 if (res.success) {
                     this.updateProduct(res.data);
                     this.$router.push({ name: "Products" }); 
                 }
             },
-            setImageRef(el) {
-                if (el) {
-                    this.imagesRefs.push(el)
+            handleFileChange(event, index) {
+                const file = event.target.files[0];
+                if (file) {
+                    this.newImages[index] = file;
                 }
             },
             addNewInputField() {
-                this.updateProductForm.images.push({newImage: ""});
+                if (this.totalImagesCount < this.maxImages) {
+                    this.newImages.push(null);
+                }
             },
             removeNewInputField() {
-                const images = this.updateProductForm.images;
-                const lastIndex = images.length - 1;
-                images.splice(lastIndex, 1);
+                if (this.newImages.length > 0) {
+                    this.newImages.pop();
+                }
+            },
+            removeExistingImage(index) {
+                this.updateProductForm.images.splice(index, 1);
+            },
+            getPreviewUrl(file) {
+                return file && window.URL ? window.URL.createObjectURL(file) : "";
             }
-        },
-        beforeUpdate() {
-            this.imagesRefs = []
-        },
+        }
     }
 </script>
 
 <template>
     <div class="container-fluid py-4 flex-grow-1">
         <div class="row">
-            <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="col-lg-8 col-md-8 mx-auto">
                 <div class="card">
                     <div class="card-header pb-0 text-center">
                         <h6 class="text-primary">Edit Product</h6>
@@ -100,21 +111,25 @@
 
                     <div class="card-body">
                         <form @submit.prevent="handleUpdate">
+                            <!-- Product Title -->
                             <div class="mb-3">
                                 <label class="form-label">Product Title</label>
                                 <argon-input v-model="updateProductForm.title" type="text" placeholder="Enter product name" required />
                             </div>
 
+                            <!-- Description -->
                             <div class="mb-3">
                                 <label class="form-label">Description</label>
                                 <textarea v-model="updateProductForm.description" class="form-control" placeholder="Enter product description"></textarea>
                             </div>
 
+                            <!-- Manufacturer Part Number -->
                             <div class="mb-3">
                                 <label class="form-label">Manufacturer Part Number</label>
                                 <argon-input v-model="updateProductForm.manufacturer_part_number" type="text" placeholder="Enter manufacturer part number" required />
                             </div>
 
+                            <!-- Pack Size -->
                             <div class="mb-3">
                                 <label class="form-label">Pack Size</label>
                                 <pack-size-select
@@ -124,13 +139,26 @@
                                 />
                             </div>
 
+                            <!-- Existing Images -->
                             <div class="mb-3"  v-if="updateProductForm.images.length">
                                 <label class="form-label">Images</label>
-                                <div v-for="image in updateProductForm.images" :key="image.id">
-                                    <div class="mb-3">
-                                        <img :src="image.file_url" :alt="image.file_name" class="img-thumbnail m-1" width="100" />
+                                <div v-for="(image, index) in updateProductForm.images" :key="image.id">
+                                    <div class="mb-3 d-flex flex-column">
+                                        <img :src="image.file_url" :alt="image.file_name" class="img-thumbnail m-1 w-50" width="100" />
+                                        <argon-button color="danger" class="ms-2 w-15 mt-2" @click="removeExistingImage(index)">Remove</argon-button>
                                     </div>
-                                    <input :ref="setImageRef" type="file" class="form-control" multiple accept="image/*" @change="handleFileChange" />
+                                    
+                                </div>
+                            </div>
+
+                            <!-- New Image Uploads -->
+                            <div class="mb-3">
+                                <label class="form-label">New Images</label>
+                                <div v-for="(file, index) in newImages" :key="'new-' + index" class="mb-3">
+                                    <input type="file" class="form-control" accept="image/*" @change="handleFileChange($event, index)" />
+                                    <div v-if="file">
+                                        <img :src="getPreviewUrl(file)" alt="New image preview" class="img-thumbnail m-1 w-50" width="100" />
+                                    </div>
                                 </div>
                             </div>
 
@@ -138,7 +166,7 @@
                                 color="primary"
                                 class="mt-2 mb-4"
                                 @click.prevent="addNewInputField"
-                                :disabled="updateProductForm.images.length >= maxImages"
+                                :disabled="totalImagesCount >= maxImages"
                             >
                                 Add
                             </argon-button>
@@ -147,7 +175,7 @@
                                 color="primary"
                                 class="mt-2 mb-4 ms-2"
                                 @click.prevent="removeNewInputField"
-                                :disabled="updateProductForm.images.length <= 0"
+                                :disabled="newImages.length <= 0"
                             >
                                 Remove
                             </argon-button>
