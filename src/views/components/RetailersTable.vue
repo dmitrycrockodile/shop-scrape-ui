@@ -16,6 +16,9 @@ export default {
         },
         handleEdit(id) {
             this.$emit("edit", id);
+        },
+        handleProductsShow(id) {
+            this.$emit("showProducts", id);
         }
     }
 }
@@ -102,6 +105,11 @@ export default {
                   class="ms-2"
                   @click="handleDelete(retailer.id)"
                 >Delete</argon-button>
+                <argon-button
+                  color="dark"
+                  class="ms-2"
+                  @click="handleProductsShow(retailer.id)"
+                >Products</argon-button>
               </td>
             </tr>
           </tbody>

@@ -61,3 +61,36 @@ export const deleteRetailer = async (id) => {
         return handleError(err);
     }
 }
+
+export const getProducts = async (id, dataPerPage, page) => {
+    try {
+        const res = await axios.get(`${BASE_API_URL}/retailers/${id}/products`, {
+            params: { 
+                dataPerPage, 
+                page 
+            }
+        })
+
+        return handleResponse(res);
+    } catch (err) {
+        if (err.response.status === 404) {
+            router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
+        }
+        return handleError(err);
+    }
+}
+
+export const addProducts = async (id, products) => {
+    try {
+        const res = await axios.post(`${BASE_API_URL}/retailers/${id}/products`, {
+            products
+        });
+
+        return handleResponse(res);
+    } catch (err) {
+        if (err.response.status === 404) {
+            router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
+        }
+        return handleError(err);
+    }
+}

@@ -40,8 +40,8 @@
           </div>
 
           <div class="card-footer text-center">
-            <argon-button color="primary" @click="$router.push({ path: `products/edit/${product.id}` })">Edit</argon-button>
-            <argon-button color="dark" @click="$router.push({ path: `products/retailers/${product.id}` })" class="ms-2">Retailers</argon-button>
+            <argon-button color="primary" @click="$router.push({ path: `products/${product.id}/edit` })">Edit</argon-button>
+            <argon-button color="dark" @click="$router.push({ path: `products/${product.id}/retailers` })" class="ms-2">Retailers</argon-button>
             <argon-button color="warning" @click="handleDelete(product.id)" class="ms-2">Delete</argon-button>
           </div>
         </div>

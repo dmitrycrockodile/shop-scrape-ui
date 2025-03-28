@@ -1,16 +1,17 @@
 <script>
+    import ProductDetails from "@/components/ProductDetails.vue";
     import ArgonButton from "@/components/ArgonButton.vue";
-    import ProductDetails from "@/components/ProductDetails.vue"
-    import { mapGetters, mapActions } from "vuex";
-    import { fetchProducts } from "@/services/productsService";
+    import { getProducts } from "@/services/retailersService";
 
     export default {
-        name: "Product Index",
+        name: "Retailer Products",
         mounted() {
-            this.handleProductsFetch();
+            this.handleGetProducts()
         },
         data() {
             return {
+                products: [],
+                pagination: [],
                 page: 1,
                 dataPerPage: 9,
                 // isPageLoading: true,
@@ -18,35 +19,30 @@
             }
         },
         components: {
-            ArgonButton,
-            ProductDetails
+            ProductDetails,
+            ArgonButton
         },
         computed: {
-            ...mapGetters({
-                products: 'products/getProducts',
-                pagination: 'products/getMetadata'
-            })
+            retailerId() {
+                return this.$route.params.id;
+            },
         },
         methods: {
-            ...mapActions({
-                setProducts: 'products/setProducts',
-                setMetaData: 'products/setMetaData'
-            }),
-            async handleProductsFetch() {
-                const res = await fetchProducts(this.dataPerPage, this.page);
-
-                if (res.success) {
-                    this.setProducts(res.data);
-                    this.setMetaData(res.meta);
-                }
-            },
             setPage(newPage) {
                 this.page = newPage;
+            },
+            async handleGetProducts() {
+                const res = await getProducts(this.retailerId, this.dataPerPage, this.page);
+
+                if (res.success) {
+                    this.products = res.data;
+                    this.pagination = res.meta;
+                }
             },
         },
         watch: {
             page() {
-                this.handleProductsFetch();
+                this.handleGetProducts();
             }
         },
     }
@@ -56,16 +52,17 @@
     <div class="pt-6 pb-4 flex-grow-1">
         <div class="card">
             <div class="card-header pb-3 d-flex align-items-center justify-content-between">
-              <h6 class="pe-4">Products table</h6>
-        
-              <argon-button type="submit" color="primary" @click="$router.push('/products/create')">
-                Create
+              <h6 class="pe-4">Retailer Products</h6>
+
+              <argon-button type="submit" color="primary" @click="$router.push(`/retailers/${retailerId}/products/add`)">
+                Add Product
              </argon-button>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <ProductDetails :products="products" />          
               </div>
+
               <div v-if="pagination.last_page > 1" class="row">
                 <div
                   class="col-12 d-flex justify-content-center wow fadeInUp animated"
@@ -123,7 +120,7 @@
                 </div>
                 </div>
             </div>
-          </div>
+        </div>
     </div>
 </template>
 

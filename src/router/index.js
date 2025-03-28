@@ -25,12 +25,12 @@ const routes = [
     component: () => import("../views/product/Create.vue"),
   },
   {
-    path: "/products/retailers/:id",
+    path: "/products/:id/retailers",
     name: "Products / Retailers",
     component: () => import("../views/product/Retailers.vue"),
   },
   {
-    path: "/products/edit/:id",
+    path: "/products/:id/edit",
     name: "Products / Edit",
     component: () => import("../views/product/Edit.vue"),
   },
@@ -45,7 +45,17 @@ const routes = [
     component: () => import("../views/retailer/Create.vue"),
   },
   {
-    path: "/retailers/edit/:id",
+    path: "/retailers/:id/products",
+    name: "Retailers / Products",
+    component: () => import("../views/retailer/Products.vue"),
+  },
+  {
+    path: "/retailers/:id/products/add",
+    name: "Retailers / Products / Add",
+    component: () => import("../views/retailer/AddProduct.vue"),
+  },
+  {
+    path: "/retailers/:id/edit",
     name: "Retailers / Edit",
     component: () => import("../views/retailer/Edit.vue"),
   },

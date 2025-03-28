@@ -5,6 +5,7 @@
             :showActions="true"
             @edit="handleEdit"
             @delete="handleDelete"
+            @showProducts="handleProductsShow"
         >
             <template #create-button>
                 <argon-button type="submit" color="primary" @click="$router.push('/retailers/create')">
@@ -45,6 +46,9 @@
             handleEdit(id) {
                 this.$router.push({ name: 'Retailers / Edit', params: { id } });
             },
+            handleProductsShow(id) {
+                this.$router.push({ name: 'Retailers / Products', params: { id } });
+            }
         }
     }
 </script>
