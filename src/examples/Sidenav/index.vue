@@ -10,7 +10,6 @@
     },
     computed: {
         ...mapState("ui", [
-            "isRTL",
             "layout",
             "sidebarType",
             "darkMode",
@@ -30,7 +29,7 @@
 
   <aside
     class="my-3 overflow-auto border-0 sidenav navbar navbar-vertical navbar-expand-xs border-radius-xl bottom-auto"
-    :class="`${isRTL ? 'me-3 rotate-caret fixed-end' : 'fixed-start ms-3'}    
+    :class="`fixed-start ms-3    
       ${
         layout === 'landing' ? 'bg-transparent shadow-none' : ' '
       } ${sidebarType}`"
@@ -50,7 +49,7 @@
             alt="main_logo"
         />
 
-        <span class="ms-2 font-weight-bold me-2">Argon Dashboard 2</span>
+        <span class="ms-2 font-weight-bold me-2">Shop Scrape App</span>
       </router-link>
     </div>
 

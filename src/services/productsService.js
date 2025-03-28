@@ -87,3 +87,16 @@ export const deleteProduct = async (id) => {
         return handleError(err);
     }
 }
+
+export const getRetailers = async (id) => {
+    try {
+        const res = await axios.get(`${BASE_API_URL}/products/${id}/retailers`)
+
+        return handleResponse(res);
+    } catch (err) {
+        if (err.response.status === 404) {
+            router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
+        }
+        return handleError(err);
+    }
+}

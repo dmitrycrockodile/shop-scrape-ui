@@ -78,25 +78,21 @@
 
                     <div class="card-body">
                         <form @submit.prevent="handleCreate">
-                            <!-- Product Title -->
                             <div class="mb-3">
                                 <label class="form-label">Product Title</label>
                                 <argon-input v-model="createProductForm.title" type="text" placeholder="Enter product name" required />
                             </div>
-
-                            <!-- Description -->
+                            
                             <div class="mb-3">
                                 <label class="form-label">Description</label>
                                 <textarea v-model="createProductForm.description" class="form-control" placeholder="Enter product description"></textarea>
                             </div>
-
-                            <!-- Manufacturer Part Number -->
+                            
                             <div class="mb-3">
                                 <label class="form-label">Manufacturer Part Number</label>
                                 <argon-input v-model="createProductForm.manufacturer_part_number" type="text" placeholder="Enter manufacturer part number" required />
                             </div>
-
-                            <!-- Pack Size -->
+                            
                             <div class="mb-3">
                                 <label class="form-label">Pack Size</label>
                                 <pack-size-select
@@ -105,8 +101,7 @@
                                     name="pack_size"
                                 />
                             </div>
-
-                            <!-- New Image Uploads -->
+                            
                             <div class="mb-3">
                                 <label class="form-label">New Images</label>
                                 <div v-for="(file, index) in newImages" :key="'new-' + index" class="mb-3">
@@ -116,7 +111,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <argon-button
                                 color="primary"
                                 class="mt-2 mb-4"

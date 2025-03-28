@@ -10,17 +10,17 @@
           <div class="card-header text-center">
             <h5 class="text-primary">{{ product.title }}</h5>
           </div>
-          <div class="card-body">
-            <div class="text-center card-body__image">
+          <div class="card-body pb-0">
+            <div class="text-center card-body__image card-body__img-container">
                 <img
                     v-if="product.images.length"
                     :src="product.images[0].file_url"
-                    class="img-fluid rounded shadow-sm mb-4"
+                    class="img-fluid rounded shadow-sm h-100"
                     :alt="product.file_name"
                 />
             </div>
 
-            <p class="text-muted">{{ product.description }}</p>
+            <p class="text-muted mt-4">{{ cutString(product.description, 75) }}</p>
 
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
@@ -40,8 +40,9 @@
           </div>
 
           <div class="card-footer text-center">
-            <argon-button color="primary" @click="$router.push({ path: `products/edit/${product.id}`, params: { id: product.id } })">Edit</argon-button>
-            <argon-button color="secondary" @click="handleDelete(product.id)" class="ms-2">Delete</argon-button>
+            <argon-button color="primary" @click="$router.push({ path: `products/edit/${product.id}` })">Edit</argon-button>
+            <argon-button color="dark" @click="$router.push({ path: `products/retailers/${product.id}` })" class="ms-2">Retailers</argon-button>
+            <argon-button color="warning" @click="handleDelete(product.id)" class="ms-2">Delete</argon-button>
           </div>
         </div>
       </div>
@@ -53,6 +54,7 @@
 import ArgonButton from "@/components/ArgonButton.vue";
 import { deleteProduct } from "@/services/productsService";
 import { mapActions } from "vuex";
+import { cutString } from "@/utils/helpers.js";
 
 export default {
   name: "ProductList",
@@ -70,7 +72,8 @@ export default {
             if (res.success) {
                 this.removeProduct(id);
             }
-        }
+        },
+        cutString,
     }
 };
 </script>
@@ -82,5 +85,8 @@ export default {
 }
 .card-body__image {
     margin-top: -30px;
+}
+.card-body__img-container {
+    height: 250px !important;
 }
 </style>

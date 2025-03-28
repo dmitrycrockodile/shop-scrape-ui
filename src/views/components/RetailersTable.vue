@@ -1,24 +1,21 @@
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
-import { deleteRetailer } from "@/services/retailersService";
-import { mapActions } from "vuex";
 
 export default {
     name: 'Retailers Table',
     props: {
-      "retailers": { type: Array, required: true }
+      "retailers": { type: Array, required: true },
+      "showActions": { type: Boolean, default: true }
     },
     components: {
         ArgonButton,
     },
     methods: {
-        ...mapActions('retailers', ['removeRetailer']),
-        async handleDelete(id) {
-            const res = await deleteRetailer(id);
-
-            if (res.success) {
-                this.removeRetailer(id);
-            }
+        handleDelete(id) {
+            this.$emit("delete", id);
+        },
+        handleEdit(id) {
+            this.$emit("edit", id);
         }
     }
 }
@@ -29,9 +26,7 @@ export default {
     <div class="card-header pb-3 d-flex align-items-center justify-content-between">
       <h6 class="pe-4">Retailers table</h6>
 
-      <argon-button type="submit" color="primary" @click="$router.push('/retailers/create')">
-        Create
-     </argon-button>
+      <slot name="create-button"></slot>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -63,10 +58,11 @@ export default {
               >
                 Website URL
               </th>
-              <th class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7">Actions</th>
+              <th v-if="showActions" class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7">Actions</th>
             </tr>
           </thead>
           <tbody>
+            <h6 class="ms-4 mt-2" v-if="!retailers.length">There is no available retailers</h6>
             <tr v-for="retailer in retailers" :key="retailer.id">
               <td>
                 <div class="d-flex px-2 py-1">
@@ -96,19 +92,16 @@ export default {
                   >Visit website</a
                 >
               </td>
-              <td class="align-middle">
-                <router-link
-                  :to="{ name: 'Retailers / Edit', params: { id: retailer.id } }"
-                  class="text-secondary font-weight-bold  me-4"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
-                  >Edit</router-link>
-                <button
-                  class="text-secondary font-weight-bold border-0 bg-transparent"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
+              <td v-if="showActions" class="align-middle">
+                <argon-button
+                  @click="handleEdit(retailer.id)"
+                  color="primary"
+                  >Edit</argon-button>
+                <argon-button
+                  color="warning"
+                  class="ms-2"
                   @click="handleDelete(retailer.id)"
-                >Delete</button>
+                >Delete</argon-button>
               </td>
             </tr>
           </tbody>

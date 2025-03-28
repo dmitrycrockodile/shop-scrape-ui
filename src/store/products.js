@@ -80,7 +80,7 @@ const getters = {
     },
     getMetadata(state) {
         return state.meta ? state.meta : [];
-    }
+    },
 };
 
 export default {
