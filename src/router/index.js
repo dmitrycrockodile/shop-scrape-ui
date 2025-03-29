@@ -60,6 +60,31 @@ const routes = [
     component: () => import("../views/retailer/Edit.vue"),
   },
   {
+    path: "/users",
+    name: "Users",
+    component: () => import("../views/user/Index.vue"),
+  },
+  {
+    path: "/users/create",
+    name: "Users / Create",
+    component: () => import("../views/user/Create.vue"),
+  },
+  {
+    path: "/users/:id/edit",
+    name: "Users / Edit",
+    component: () => import("../views/user/Edit.vue"),
+  },
+  {
+    path: "/users/:id/retailers",
+    name: "Users / Retailers",
+    component: () => import("../views/user/Retailers.vue"),
+  },
+  {
+    path: "/users/:id/retailers/assign",
+    name: "Users / Retailers / Assign",
+    component: () => import("../views/user/AssignRetailers.vue"),
+  },
+  {
     path: "/dashboard-default",
     name: "Dashboard",
     component: Dashboard,

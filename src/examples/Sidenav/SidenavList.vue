@@ -60,9 +60,9 @@ export default {
 
       <li class="nav-item">
         <sidenav-item
-          to="/tables"
-          :class="getRoute() === 'tables' ? 'active' : ''"
-          navText="Tables"
+          to="/users"
+          :class="getRoute() === 'users' ? 'active' : ''"
+          navText="Users"
         >
           <template v-slot:icon>
             <i

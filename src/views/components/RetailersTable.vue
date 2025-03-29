@@ -5,7 +5,8 @@ export default {
     name: 'Retailers Table',
     props: {
       "retailers": { type: Array, required: true },
-      "showActions": { type: Boolean, default: true }
+      "showActions": { type: Boolean, default: true },
+      "revokeAble": { type: Boolean, default: false },
     },
     components: {
         ArgonButton,
@@ -19,6 +20,9 @@ export default {
         },
         handleProductsShow(id) {
             this.$emit("showProducts", id);
+        },
+        handleRevoke(id) {
+            this.$emit("revoke", id);
         }
     }
 }
@@ -62,6 +66,7 @@ export default {
                 Website URL
               </th>
               <th v-if="showActions" class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7">Actions</th>
+              <th v-if="revokeAble" class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7">Revoke</th>
             </tr>
           </thead>
           <tbody>
@@ -110,6 +115,13 @@ export default {
                   class="ms-2"
                   @click="handleProductsShow(retailer.id)"
                 >Products</argon-button>
+              </td>
+              <td v-if="revokeAble" class="align-middle">
+                <argon-button
+                    color="warning"
+                    class="ms-2"
+                    @click="handleRevoke(retailer.id)"
+                >Revoke</argon-button>
               </td>
             </tr>
           </tbody>

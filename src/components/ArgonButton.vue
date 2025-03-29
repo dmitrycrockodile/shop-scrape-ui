@@ -20,6 +20,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 const getClasses = (variant, color, size, fullWidth, active) => {
   let colorValue, sizeValue, fullWidthValue, activeValue;
@@ -46,6 +50,7 @@ const getClasses = (variant, color, size, fullWidth, active) => {
   <button
     class="btn mb-0"
     :class="getClasses(variant, color, size, fullWidth, active)"
+    :disabled="disabled"
   >
     <slot />
   </button>
