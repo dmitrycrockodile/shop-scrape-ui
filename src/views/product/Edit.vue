@@ -26,16 +26,14 @@
                 maxImages: 5,
                 newImages: [],
                 loading: false,
-                error: null,
-                availablePackSizes: [
-                    { id: 13, name: "Small", weight: "5 kg", amount: 10 },
-                    { id: 18, name: "Medium", weight: "10 kg", amount: 20 },
-                    { id: 19, name: "Large", weight: "20 kg", amount: 30 }
-                ]
+                error: null
             }
         },
         computed: {
             ...mapGetters("products", ["getProducts"]),
+            ...mapGetters({
+                packSizes: 'packSizes/getPackSizes'
+            }),
             productId() {
                 return this.$route.params.id;
             },
@@ -132,7 +130,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Pack Size</label>
                                 <pack-size-select
-                                    :options="availablePackSizes"
+                                    :options="packSizes"
                                     v-model="updateProductForm.pack_size_id"
                                     name="pack_size"
                                 />

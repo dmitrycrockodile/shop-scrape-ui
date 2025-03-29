@@ -4,7 +4,7 @@ import ArgonInput from "@/components/ArgonInput.vue";
 import CurrencySelect from "@/components/CurrencySelect.vue";
 
 import { createRetailer } from "@/services/retailersService";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Retailer Create",
@@ -23,12 +23,12 @@ export default {
       },
       loading: false,
       error: null,
-      availableCurrencies: [
-        { id: 1, name: "USD", code: "USD" },
-        { id: 2, name: "EUR", code: "EUR" },
-        { id: 3, name: "GBP", code: "GBP" },
-      ],
     };
+  },
+  computed: {
+    ...mapGetters({
+        currencies: 'currencies/getCurrencies'
+    })
   },
   methods: {
     ...mapActions("retailers", ["addRetailer"]),
@@ -43,7 +43,7 @@ export default {
         this.$router.push({ name: "Retailers" });
       }
     },
-  },
+  }
 };
 </script>
 
@@ -100,7 +100,7 @@ export default {
               <div class="mb-3 w-25">
                 <label class="form-label">Currency</label>
                 <currency-select
-                  :options="availableCurrencies"
+                  :options="currencies"
                   v-model="createRetailerForm.currency_id"
                   name="currency"
                 />

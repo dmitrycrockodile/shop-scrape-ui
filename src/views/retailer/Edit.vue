@@ -23,16 +23,14 @@
                     currency_id: null,
                 },
                 loading: false,
-                error: null,
-                availableCurrencies: [
-                { id: 1, name: "USD", code: "USD" },
-                { id: 2, name: "EUR", code: "EUR" },
-                { id: 3, name: "GBP", code: "GBP" }
-            ],
+                error: null
             }
         },
         computed: {
             ...mapGetters("retailers", ["getRetailers"]),
+            ...mapGetters({
+                currencies: 'currencies/getCurrencies'
+            }),
             retailerId() {
                 return this.$route.params.id; 
             },
@@ -107,7 +105,7 @@
                             <div class="mb-3 w-25">
                                 <label class="form-label">Currency</label>
                                 <currency-select
-                                    :options="availableCurrencies"
+                                    :options="currencies"
                                     v-model="updateRetailerForm.currency_id"
                                     name="currency"
                                 />

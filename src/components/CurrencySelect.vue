@@ -4,7 +4,7 @@
       class="dropdown__selected-option"
       @click="isDropdownVisible = !isDropdownVisible"
     >
-      {{ selectedOption.name }}
+      {{ selectedOption.code }}
       <i
         :class="`flaticon-down-arrow ${isDropdownVisible ? 'active' : ''}`"
       ></i>
@@ -61,7 +61,19 @@ export default {
       }, {});
     },
   },
+  watch: {
+    modelValue(newValue) {
+      this.selectedOption = this.options.find(
+        (option) => option.id === newValue
+      );
+    },
+  },
   mounted() {
+    if (this.modelValue) {
+      this.selectedOption = this.options.find(
+        (option) => option.id === this.modelValue
+      );
+    }
     window.addEventListener("click", this.closeDropdown);
   },
   unmounted() {

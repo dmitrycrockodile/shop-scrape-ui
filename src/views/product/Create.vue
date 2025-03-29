@@ -1,5 +1,5 @@
 <script>
-    import { mapActions } from "vuex";
+    import { mapActions, mapGetters } from "vuex";
 
     import ArgonButton from "@/components/ArgonButton.vue";
     import ArgonInput from "@/components/ArgonInput.vue";
@@ -26,12 +26,7 @@
                 maxImages: 5,
                 newImages: [],
                 loading: false,
-                error: null,
-                availablePackSizes: [
-                    { id: 13, name: "Small", weight: "5 kg", amount: 10 },
-                    { id: 18, name: "Medium", weight: "10 kg", amount: 20 },
-                    { id: 19, name: "Large", weight: "20 kg", amount: 30 }
-                ]
+                error: null
             }
         },
         methods: {
@@ -63,7 +58,12 @@
             getPreviewUrl(file) {
                 return file && window.URL ? window.URL.createObjectURL(file) : "";
             }
-        }
+        },
+        computed: {
+            ...mapGetters({
+                packSizes: 'packSizes/getPackSizes'
+            })
+        },
     }
 </script>
 
@@ -96,7 +96,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Pack Size</label>
                                 <pack-size-select
-                                    :options="availablePackSizes"
+                                    :options="packSizes"
                                     v-model="createProductForm.pack_size_id"
                                     name="pack_size"
                                 />
