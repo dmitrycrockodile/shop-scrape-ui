@@ -50,7 +50,7 @@ export default {
 <template>
   <div class="container-fluid py-4 flex-grow-1">
     <div class="row">
-      <div class="col-lg-6 col-md-8 mx-auto">
+      <div class="col-lg-6 col-md-8 mx-auto w-75">
         <div class="card">
           <div class="card-header pb-0 text-center">
             <h6 class="text-primary">Create Retailer</h6>

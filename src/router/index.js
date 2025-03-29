@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
-import Tables from "../views/Tables.vue";
-import Billing from "../views/Billing.vue";
 import VirtualReality from "../views/VirtualReality.vue";
 import RTL from "../views/Rtl.vue";
 import Profile from "../views/Profile.vue";
@@ -85,19 +83,24 @@ const routes = [
     component: () => import("../views/user/AssignRetailers.vue"),
   },
   {
+    path: "/pack-sizes",
+    name: "Pack sizes",
+    component: () => import("../views/pack-sizes/Index.vue"),
+  },
+  {
+    path: "/pack-sizes/create",
+    name: "Pack sizes / Create",
+    component: () => import("../views/pack-sizes/Create.vue"),
+  },
+  {
+    path: "/pack-sizes/:id/edit",
+    name: "Pack sizes / Edit",
+    component: () => import("../views/pack-sizes/Edit.vue"),
+  },
+  {
     path: "/dashboard-default",
     name: "Dashboard",
     component: Dashboard,
-  },
-  {
-    path: "/tables",
-    name: "Tables",
-    component: Tables,
-  },
-  {
-    path: "/billing",
-    name: "Billing",
-    component: Billing,
   },
   {
     path: "/virtual-reality",

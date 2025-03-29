@@ -66,7 +66,7 @@ export default {
         >
           <template v-slot:icon>
             <i
-              class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"
+              class="ni ni-single-02 text-warning text-sm opacity-10"
             ></i>
           </template>
         </sidenav-item>
@@ -74,12 +74,12 @@ export default {
 
       <li class="nav-item">
         <sidenav-item
-          to="/billing"
-          :class="getRoute() === 'billing' ? 'active' : ''"
-          navText="Billing"
+          to="/pack-sizes"
+          :class="getRoute() === 'pack-sizes' ? 'active' : ''"
+          navText="Pack sizes"
         >
           <template v-slot:icon>
-            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+            <i class="ni ni-app text-success text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>

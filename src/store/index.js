@@ -4,6 +4,7 @@ import auth from "./auth";
 import retailers from "./retailers";
 import products from "./products";
 import users from "./users";
+import packSizes from "./packSizes";
 
 export default createStore({
     modules: {
@@ -11,6 +12,7 @@ export default createStore({
         auth,
         retailers,
         products,
-        users
+        users,
+        packSizes
     },
 });
