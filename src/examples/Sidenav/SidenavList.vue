@@ -86,12 +86,12 @@ export default {
 
       <li class="nav-item">
         <sidenav-item
-          to="/virtual-reality"
-          :class="getRoute() === 'virtual-reality' ? 'active' : ''"
-          navText="Virtual Reality"
+          to="/currencies"
+          :class="getRoute() === 'currencies' ? 'active' : ''"
+          navText="Currencies"
         >
           <template v-slot:icon>
-            <i class="ni ni-app text-info text-sm opacity-10"></i>
+            <i class="ni ni-money-coins text-info text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>

@@ -1,9 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
-import VirtualReality from "../views/VirtualReality.vue";
-import RTL from "../views/Rtl.vue";
 import Profile from "../views/Profile.vue";
-import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
 
 const routes = [
@@ -85,32 +82,27 @@ const routes = [
   {
     path: "/pack-sizes",
     name: "Pack sizes",
-    component: () => import("../views/pack-sizes/Index.vue"),
+    component: () => import("../views/pack-size/Index.vue"),
   },
   {
     path: "/pack-sizes/create",
     name: "Pack sizes / Create",
-    component: () => import("../views/pack-sizes/Create.vue"),
+    component: () => import("../views/pack-size/Create.vue"),
   },
   {
     path: "/pack-sizes/:id/edit",
     name: "Pack sizes / Edit",
-    component: () => import("../views/pack-sizes/Edit.vue"),
+    component: () => import("../views/pack-size/Edit.vue"),
+  },
+  {
+    path: "/currencies",
+    name: "Currencies",
+    component: () => import("../views/currency/Index.vue"),
   },
   {
     path: "/dashboard-default",
     name: "Dashboard",
     component: Dashboard,
-  },
-  {
-    path: "/virtual-reality",
-    name: "Virtual Reality",
-    component: VirtualReality,
-  },
-  {
-    path: "/rtl-page",
-    name: "RTL",
-    component: RTL,
   },
   {
     path: "/profile",
@@ -121,11 +113,6 @@ const routes = [
     path: "/signin",
     name: "Signin",
     component: Signin,
-  },
-  {
-    path: "/signup",
-    name: "Signup",
-    component: Signup,
   },
   {
     path: '/:catchAll(.*)',
