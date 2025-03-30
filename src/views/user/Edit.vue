@@ -21,7 +21,7 @@ export default {
         location: "",
       },
       loading: false,
-      error: null
+      validationErrors: {}
     };
   },
   computed: {
@@ -51,11 +51,16 @@ export default {
   methods: {
     ...mapActions("users", ["updateUser"]),
     async handleUpdate() {
+        this.validationErrors = {};
       const res = await updateUser(this.updateUserForm, this.userId);
 
       if (res.success) {
         this.updateUser(res.data);
         this.$router.push({ name: "Users" });
+      } else {
+        if (res.errors) {
+          this.validationErrors = res.errors;
+        }
       }
     }
   }
@@ -76,39 +81,43 @@ export default {
               <div class="mb-3">
                 <label class="form-label">Email</label>
                 <argon-input
-                  v-model="updateUserForm.email"
+                  v-model.trim.lazy="updateUserForm.email"
                   type="email"
                   placeholder="Enter email"
                   required
                 />
+                <div v-if="validationErrors.email" class="text-danger">{{ validationErrors.email[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <argon-input
-                  v-model="updateUserForm.name"
+                  v-model.trim.lazy="updateUserForm.name"
                   type="text"
                   placeholder="Enter name"
                   required
                 />
+                <div v-if="validationErrors.name" class="text-danger">{{ validationErrors.name[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Password</label>
                 <argon-input
-                  v-model="updateUserForm.password"
+                  v-model.trim.lazy="updateUserForm.password"
                   type="password"
                   placeholder="Enter password"
                 />
+                <div v-if="validationErrors.password" class="text-danger">{{ validationErrors.password[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Location</label>
                 <argon-input
-                  v-model="updateUserForm.location"
+                  v-model.trim.lazy="updateUserForm.location"
                   type="text"
                   placeholder="Enter location"
                 />
+                <div v-if="validationErrors.location" class="text-danger">{{ validationErrors.location[0] }}</div>
               </div>
 
               <div class="text-center">
@@ -122,10 +131,6 @@ export default {
                 >
                   Cancel
                 </argon-button>
-              </div>
-
-              <div v-if="error" class="alert alert-danger text-center mt-3">
-                {{ error }}
               </div>
             </form>
           </div>

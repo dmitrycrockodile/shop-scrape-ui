@@ -21,7 +21,7 @@ export default {
         amount: "",
       },
       loading: false,
-      error: null
+      validationErrors: {}
     };
   },
   computed: {
@@ -51,13 +51,16 @@ export default {
   methods: {
     ...mapActions("packSizes", ["updatePackSize"]),
     async handleUpdate() {
+        this.validationErrors = {};
       const res = await updatePackSize(this.updatePackSizeForm, this.packSizeId);
 
       if (res.success) {
         this.updatePackSize(res.data);
         this.$router.push('/pack-sizes');
       } else {
-        this.error = res.message || "An error occurred while updating the pack size.";
+        if (res.errors) {
+          this.validationErrors = res.errors;
+        }
       }
     }
   }
@@ -78,43 +81,47 @@ export default {
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <argon-input
-                  v-model="updatePackSizeForm.name"
+                  v-model.trim.lazy="updatePackSizeForm.name"
                   type="text"
                   placeholder="Enter pack size name"
                   required
                 />
+                <div v-if="validationErrors.name" class="text-danger">{{ validationErrors.name[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Weight</label>
                 <argon-input
-                  v-model="updatePackSizeForm.weight"
+                  v-model.trim.lazy="updatePackSizeForm.weight"
                   type="number"
                   placeholder="Enter weight"
                   required
                   min="0"
                 />
+                <div v-if="validationErrors.weight" class="text-danger">{{ validationErrors.weight[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Weight Unit</label>
                 <argon-input
-                  v-model="updatePackSizeForm.weight_unit"
+                  v-model.trim.lazy="updatePackSizeForm.weight_unit"
                   type="text"
                   placeholder="kg, g, l, ml"
                   required
                   maxlength="10"
                 />
+                <div v-if="validationErrors.weight_unit" class="text-danger">{{ validationErrors.weight_unit[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Amount</label>
                 <argon-input
-                  v-model="updatePackSizeForm.amount"
+                  v-model.trim.lazy="updatePackSizeForm.amount"
                   type="number"
                   placeholder="Enter amount"
                   required
                 />
+                <div v-if="validationErrors.amount" class="text-danger">{{ validationErrors.amount[0] }}</div>
               </div>
 
               <div class="text-center">
@@ -128,10 +135,6 @@ export default {
                 >
                   Cancel
                 </argon-button>
-              </div>
-
-              <div v-if="error" class="alert alert-danger text-center mt-3">
-                {{ error }}
               </div>
             </form>
           </div>

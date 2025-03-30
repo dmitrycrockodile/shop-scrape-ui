@@ -14,7 +14,7 @@ export default {
         return {
             retailersToAdd: [{ id: null }],
             loading: false,
-            error: null,
+            validationErrors: {}
         };
     },
     computed: {
@@ -32,20 +32,19 @@ export default {
         },
         async handleAssign() {
             this.loading = true;
-            try {
-                const res = await assignRetailers(this.userId, this.retailersToAdd);
-                
-                if (res.success) {
-                    this.updateUserRetailers({ id: this.userId, retailers: res.data});
-                    this.$router.push(`/users/${this.userId}/retailers`);
-                } else {
-                    this.error = res.message;
+            
+            const res = await assignRetailers(this.userId, this.retailersToAdd);
+            
+            if (res.success) {
+                this.updateUserRetailers({ id: this.userId, retailers: res.data});
+                this.$router.push(`/users/${this.userId}/retailers`);
+            } else {
+                if (res.errors) {
+                    this.validationErrors = res.errors;
                 }
-            } catch (error) {
-                this.error = "Something went wrong. Please try again.";
-            } finally {
-                this.loading = false;
             }
+            
+            this.loading = false;
         }
     }
 };
@@ -72,7 +71,12 @@ export default {
                                             class="me-2"
                                             required
                                         />
+    
                                         <argon-button class="h-100" color="danger" :disabled="retailersToAdd.length <= 1" @click="removeRetailer(index)" type="button">Remove</argon-button>
+                                    </div>
+
+                                    <div v-if="validationErrors[`retailers.${index}.id`]" class="text-danger">
+                                        {{ validationErrors[`retailers.${index}.id`][0] }}
                                     </div>
                                 </div>
                                 <argon-button color="primary" @click="addRetailer" type="button">Add Retailer</argon-button>
@@ -85,7 +89,6 @@ export default {
                                     Cancel
                                 </argon-button>
                             </div>
-                            <div v-if="error" class="alert alert-danger text-center text-white mt-3">{{ error }}</div>
                         </form>
                     </div>
                 </div>

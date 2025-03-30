@@ -23,7 +23,7 @@
                     currency_id: null,
                 },
                 loading: false,
-                error: null
+                validationErrors: {}
             }
         },
         computed: {
@@ -56,11 +56,16 @@
         methods: {
             ...mapActions('retailers', ['updateRetailer']),
             async handleUpdate() {
+                this.validationErrors = {};
                 const res = await updateRetailer(this.updateRetailerForm, this.$refs.logoFile.files[0], this.retailerId);
 
                 if (res.success) {
                     this.updateRetailer(res.data);
                     this.$router.push({ name: "Retailers" }); 
+                } else {
+                    if (res.errors) {
+                        this.validationErrors = res.errors;
+                    }
                 }
             }
         },
@@ -81,6 +86,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Retailer Title</label>
                                 <argon-input v-model="updateRetailerForm.title" type="text" placeholder="Enter retailer name" required />
+                                <div v-if="validationErrors.title" class="text-danger">{{ validationErrors.title[0] }}</div>
                             </div>
 
                             <div class="mb-3">
@@ -94,12 +100,14 @@
                                     accept="image/*"
                                     placeholder="Upload a new logo"
                                   />
+                                  <div v-if="validationErrors.logo" class="text-danger">{{ validationErrors.logo[0] }}</div>
                                 </div>
                               </div>
 
                               <div class="mb-3">
                                 <label class="form-label">URL</label>
                                 <argon-input v-model="updateRetailerForm.url" type="url" placeholder="Enter URL" required />
+                                <div v-if="validationErrors.url" class="text-danger">{{ validationErrors.url[0] }}</div>
                               </div>
 
                             <div class="mb-3 w-25">
@@ -109,6 +117,7 @@
                                     v-model="updateRetailerForm.currency_id"
                                     name="currency"
                                 />
+                                <div v-if="validationErrors.currency_id" class="text-danger">{{ validationErrors.currency_id[0] }}</div>
                             </div>
 
                             <div class="text-center">
@@ -119,8 +128,6 @@
                                     Cancel
                                 </argon-button>
                             </div>
-
-                            <div v-if="error" class="alert alert-danger text-center mt-3">{{ error }}</div>
                         </form>
                     </div>
                 </div>

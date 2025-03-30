@@ -15,16 +15,13 @@ Coded by www.creative-tim.com
 <script>
 import { mapState } from "vuex";
 import Sidenav from "./examples/Sidenav";
-// import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import AppFooter from "@/examples/Footer.vue";
-// import { mapMutations } from "vuex/dist/vuex.cjs.js";
 
 export default {
   components: {
     Sidenav,
     Navbar,
-    // Configurator,
     AppFooter,
   },
   computed: {
@@ -36,6 +33,8 @@ export default {
       "layout",
       "showNavbar",
       "showFooter",
+      "hideConfigButton",
+      "showConfig"
     ]),
 
     navClasses() {
@@ -48,10 +47,7 @@ export default {
         "px-0 mx-4": !this.isAbsolute,
       };
     },
-  },
-//   methods: {
-//     ...mapMutations("ui", ['toggleConfigurator'])
-//   },
+  }
 };
 </script>
 
@@ -73,10 +69,5 @@ export default {
     <router-view />
 
     <app-footer v-show="showFooter" />
-
-    <!-- <configurator
-      :toggle="toggleConfigurator"
-      :class="[showConfig ? 'show' : '', hideConfigButton ? 'd-none' : '']"
-    /> -->
   </main>
 </template>

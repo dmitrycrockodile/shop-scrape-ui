@@ -1,5 +1,5 @@
 <script>
-  import { mapState } from "vuex";
+  import { mapState, mapActions } from "vuex";
   import AppFooter from "@/examples/Footer.vue";
   import Navbar from "@/examples/Navbars/Navbar.vue";
   import CardCalendar from "./components/CardCalendar.vue";
@@ -35,12 +35,10 @@
       ]),
     },
     methods: {
+    ...mapActions("ui", ['toggleConfigurator']),
       sidebarMinimize() {
         this.$store.commit("ui","sidebarMinimize");
-      },
-      toggleConfigurator() {
-        this.$store.commit("ui", "toggleConfigurator");
-      },
+      }
     },
     mounted() {
       setTooltip();

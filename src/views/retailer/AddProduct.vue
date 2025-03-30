@@ -13,7 +13,7 @@ export default {
         return {
             productsToAdd: [{ id: null, url: "" }],
             loading: false,
-            error: null,
+            validationErrors: {}
         };
     },
     computed: {
@@ -35,17 +35,17 @@ export default {
 
         async handleCreate() {
             this.loading = true;
-            try {
-                const res = await addProducts(this.retailerId, this.productsToAdd);
-                
-                if (res.success) {
-                    this.$router.push({ name: "Retailers" });
-                } else {
-                    this.error = res.message;
+            this.validationErrors = {};
+
+            const res = await addProducts(this.retailerId, this.productsToAdd);
+            
+            if (res.success) {
+                this.$router.push({ name: "Retailers" });
+                this.loading = false;
+            } else {
+                if (res.errors) {
+                    this.validationErrors = res.errors;
                 }
-            } catch (error) {
-                this.error = "Something went wrong. Please try again.";
-            } finally {
                 this.loading = false;
             }
         }
@@ -67,20 +67,34 @@ export default {
                                 <label class="form-label">Products</label>
                                 <div v-for="(product, index) in productsToAdd" :key="index" class="mb-2">
                                     <div class="d-flex">
-                                        <argon-input
-                                            v-model="product.id"
-                                            type="number"
-                                            placeholder="Product ID"
-                                            class="me-2"
-                                            required
-                                        />
-                                        <argon-input
-                                            v-model="product.url"
-                                            type="url"
-                                            placeholder="Product URL"
-                                            class="me-2"
-                                            required
-                                        />
+                                        <div class="mb-3">
+                                                <argon-input
+                                                v-model="product.id"
+                                                type="number"
+                                                placeholder="Product ID"
+                                                class="me-2"
+                                                required
+                                            />
+
+                                            <div v-if="validationErrors[`products.${index}.id`]" class="text-danger">
+                                                {{ validationErrors[`products.${index}.id`][0] }}
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <argon-input
+                                                v-model.trim.lazy="product.url"
+                                                type="url"
+                                                placeholder="Product URL"
+                                                class="me-2"
+                                                required
+                                            />
+
+                                            <div v-if="validationErrors[`products.${index}.url`]" class="text-danger">
+                                                {{ validationErrors[`products.${index}.url`][0] }}
+                                            </div>
+                                        </div>
+                                        
+
                                         <argon-button class="h-100" color="danger" :disabled="productsToAdd.length <= 1" @click="removeProduct(index)" type="button">Remove</argon-button>
                                     </div>
                                 </div>
@@ -94,7 +108,6 @@ export default {
                                     Cancel
                                 </argon-button>
                             </div>
-                            <div v-if="error" class="alert alert-danger text-center text-white mt-3">{{ error }}</div>
                         </form>
                     </div>
                 </div>

@@ -7,10 +7,9 @@ export function handleResponse(res) {
 }
 
 export function handleError(err) {
-  console.error(err);
   return {
     message: err.response?.data?.message || "An error occured",
-    success: err.response?.data?.success || false,
+    errors: err.response?.data?.errors || null,
   };
 }
 

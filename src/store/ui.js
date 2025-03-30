@@ -17,10 +17,10 @@ const state = {
 };
   
 const mutations = {
-    toggleConfigurator(state) {
+    TOGGLE_CONFIGURATOR(state) {
         state.showConfig = !state.showConfig;
     },
-    sidebarMinimize(state) {
+    SIDEBAR_MINIMIZE(state) {
         let sidenav_show = document.querySelector("#app");
         if (state.isPinned) {
             sidenav_show.classList.add("g-sidenav-hidden");
@@ -32,10 +32,10 @@ const mutations = {
             state.isPinned = true;
         }
     },
-    sidebarType(state, payload) {
+    SET_SIDEBAR_TYPE(state, payload) {
         state.sidebarType = payload;
     },
-    navbarFixed(state) {
+    SET_NAVBAR_FIXED(state) {
         state.isNavFixed = !state.isNavFixed;
     },
 };
@@ -43,7 +43,19 @@ const mutations = {
 const actions = {
     toggleSidebarColor({ commit }, payload) {
         commit("sidebarType", payload);
-    }
+    },
+    toggleConfigurator({ commit }) {
+        commit("TOGGLE_CONFIGURATOR");
+    },
+    setSidebarType({ commit }) {
+        commit("SET_SIDEBAR_TYPE");
+    },
+    setNavbarFixed({ commit }) {
+        commit("SET_NAVBAR_FIXED");
+    },
+    minimizeSidebar({ commit }) {
+        commit("SIDEBAR_MINIMIZE");
+    },
 };
   
 export default {

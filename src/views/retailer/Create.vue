@@ -22,7 +22,7 @@ export default {
         currency_id: null,
       },
       loading: false,
-      error: null,
+      validationErrors: {}
     };
   },
   computed: {
@@ -33,6 +33,7 @@ export default {
   methods: {
     ...mapActions("retailers", ["addRetailer"]),
     async handleCreate() {
+        this.validationErrors = {};
       const res = await createRetailer(
         this.createRetailerForm,
         this.$refs.logoFile.files[0]
@@ -41,6 +42,10 @@ export default {
       if (res.success) {
         this.addRetailer(res.data);
         this.$router.push({ name: "Retailers" });
+      } else {
+        if (res.errors) {
+          this.validationErrors = res.errors;
+        }
       }
     },
   }
@@ -61,11 +66,12 @@ export default {
               <div class="mb-3">
                 <label class="form-label">Retailer Title</label>
                 <argon-input
-                  v-model="createRetailerForm.title"
+                  v-model.trim.lazy="createRetailerForm.title"
                   type="text"
                   placeholder="Enter retailer name"
                   required
                 />
+                <div v-if="validationErrors.title" class="text-danger">{{ validationErrors.title[0] }}</div>
               </div>
 
               <div class="mb-3">
@@ -84,17 +90,19 @@ export default {
                     accept="image/*"
                     placeholder="Upload a new logo"
                   />
+                  <div v-if="validationErrors.logo" class="text-danger">{{ validationErrors.logo[0] }}</div>
                 </div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">URL</label>
                 <argon-input
-                  v-model="createRetailerForm.url"
+                  v-model.trim.lazy="createRetailerForm.url"
                   type="url"
                   placeholder="Enter URL"
                   required
                 />
+                <div v-if="validationErrors.url" class="text-danger">{{ validationErrors.url[0] }}</div>
               </div>
 
               <div class="mb-3 w-25">
@@ -104,6 +112,7 @@ export default {
                   v-model="createRetailerForm.currency_id"
                   name="currency"
                 />
+                <div v-if="validationErrors.currency_id" class="text-danger">{{ validationErrors.currency_id[0] }}</div>
               </div>
 
               <div class="text-center">
@@ -118,10 +127,6 @@ export default {
                   Cancel
                 </argon-button>
               </div>
-
-              <div v-if="error" class="alert alert-danger text-center mt-3">
-                {{ error }}
-              </div>
             </form>
           </div>
         </div>
@@ -129,5 +134,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped></style>

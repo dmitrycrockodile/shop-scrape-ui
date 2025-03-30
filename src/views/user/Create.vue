@@ -21,7 +21,7 @@ export default {
         location: "",
       },
       loading: false,
-      error: null,
+      validationErrors: {}
     };
   },
   methods: {
@@ -34,8 +34,11 @@ export default {
         this.addUser(res.data);
         this.$router.push({ name: "Users" });
       } else {
-        this.error = res.message;
+        if (res.errors) {
+          this.validationErrors = res.errors;
+        }
       }
+
       this.loading = false;
     },
   },
@@ -56,42 +59,45 @@ export default {
               <div class="mb-3">
                 <label class="form-label">Email</label>
                 <argon-input
-                  v-model="createUserForm.email"
+                  v-model.trim.lazy="createUserForm.email"
                   type="email"
-                  :id="'email-input'" 
+                  :id="'email-input'"
                   placeholder="Enter email"
                   required
                 />
+                <div v-if="validationErrors.email" class="text-danger">{{ validationErrors.email[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <argon-input
-                  v-model="createUserForm.name"
+                  v-model.trim.lazy="createUserForm.name"
                   type="text"
-                  :id="'name-input'" 
+                  :id="'name-input'"
                   placeholder="Enter name"
                   required
                 />
+                <div v-if="validationErrors.name" class="text-danger">{{ validationErrors.name[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Password</label>
                 <argon-input
-                  v-model="createUserForm.password"
+                  v-model.trim.lazy="createUserForm.password"
                   type="password"
-                  :id="'password-input'" 
+                  :id="'password-input'"
                   placeholder="Enter password"
                   required
                 />
+                <div v-if="validationErrors.password" class="text-danger">{{ validationErrors.password[0] }}</div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Confirm Password</label>
                 <argon-input
-                  v-model="createUserForm.password_confirmation"
+                  v-model.trim.lazy="createUserForm.password_confirmation"
                   type="password"
-                  :id="'password_confirmation-input'" 
+                  :id="'password_confirmation-input'"
                   placeholder="Confirm password"
                   required
                 />
@@ -100,12 +106,13 @@ export default {
               <div class="mb-3">
                 <label class="form-label">Location</label>
                 <argon-input
-                  v-model="createUserForm.location"
+                  v-model.trim.lazy="createUserForm.location"
                   type="text"
-                  :id="'location-input'" 
+                  :id="'location-input'"
                   placeholder="Enter location"
                   required
                 />
+                <div v-if="validationErrors.location" class="text-danger">{{ validationErrors.location[0] }}</div>
               </div>
 
               <div class="text-center">
@@ -119,10 +126,6 @@ export default {
                 >
                   Cancel
                 </argon-button>
-              </div>
-
-              <div v-if="error" class="alert alert-danger text-center text-white mt-3">
-                {{ error }}
               </div>
             </form>
           </div>

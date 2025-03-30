@@ -46,3 +46,16 @@
       line-height: 1.1;
     }
   }
+
+  .logout__button {
+    border: 2px solid #fff !important;
+    border-radius: 5px !important;
+    transition: all .2s ease-in !important;
+    background-color: transparent !important;
+
+    &:hover {
+        border-radius: 8px !important;
+        background-color: #fff !important;
+        color: #2dce89 !important;
+    }
+  }

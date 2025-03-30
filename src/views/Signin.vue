@@ -84,7 +84,7 @@ export default {
                             type="password"
                             placeholder="Password"
                             size="lg"
-                            v-model.lazy="password"
+                            v-model.trim.lazy="password"
                             isRequired
                         />
                         </div>
