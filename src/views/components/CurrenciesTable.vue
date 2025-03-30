@@ -2,14 +2,16 @@
 export default {
   name: "Currencies Table",
   props: {
-    currencies: { type: Array, required: true }
-  }
+    currencies: { type: Array, required: true },
+  },
 };
 </script>
 
 <template>
   <div class="card w-75 m-auto">
-    <div class="card-header pb-3 d-flex align-items-center justify-content-between">
+    <div
+      class="card-header pb-3 d-flex align-items-center justify-content-between"
+    >
       <h6 class="pe-4">Currencies</h6>
 
       <slot name="create-button"></slot>
@@ -19,16 +21,24 @@ export default {
         <table class="table align-items-center mb-0 fs-7">
           <thead>
             <tr>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
                 ID
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+              >
                 Code
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
                 Name
               </th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
                 Symbol
               </th>
             </tr>

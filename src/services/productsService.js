@@ -12,6 +12,7 @@ export const fetchProducts = async (dataPerPage, page) => {
         
         return handleResponse(res);
     } catch (err) {
+        console.log(err)
         return handleError(err);
     }
 }

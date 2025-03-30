@@ -10,7 +10,7 @@ export default {
   name: "Pack Size Edit",
   components: {
     ArgonInput,
-    ArgonButton
+    ArgonButton,
   },
   data() {
     return {
@@ -21,7 +21,7 @@ export default {
         amount: "",
       },
       loading: false,
-      validationErrors: {}
+      validationErrors: {},
     };
   },
   computed: {
@@ -30,8 +30,10 @@ export default {
       return this.$route.params.id;
     },
     selectedPackSize() {
-      return this.getPackSizes.find(packSize => packSize.id == this.packSizeId);
-    }
+      return this.getPackSizes.find(
+        (packSize) => packSize.id == this.packSizeId
+      );
+    },
   },
   watch: {
     selectedPackSize: {
@@ -42,28 +44,31 @@ export default {
             name: newPackSize.name,
             weight: newPackSize.weight,
             weight_unit: newPackSize.weight_unit,
-            amount: newPackSize.amount
+            amount: newPackSize.amount,
           };
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     ...mapActions("packSizes", ["updatePackSize"]),
     async handleUpdate() {
-        this.validationErrors = {};
-      const res = await updatePackSize(this.updatePackSizeForm, this.packSizeId);
+      this.validationErrors = {};
+      const res = await updatePackSize(
+        this.updatePackSizeForm,
+        this.packSizeId
+      );
 
       if (res.success) {
         this.updatePackSize(res.data);
-        this.$router.push('/pack-sizes');
+        this.$router.push("/pack-sizes");
       } else {
         if (res.errors) {
           this.validationErrors = res.errors;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -86,7 +91,9 @@ export default {
                   placeholder="Enter pack size name"
                   required
                 />
-                <div v-if="validationErrors.name" class="text-danger">{{ validationErrors.name[0] }}</div>
+                <div v-if="validationErrors.name" class="text-danger">
+                  {{ validationErrors.name[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -98,7 +105,9 @@ export default {
                   required
                   min="0"
                 />
-                <div v-if="validationErrors.weight" class="text-danger">{{ validationErrors.weight[0] }}</div>
+                <div v-if="validationErrors.weight" class="text-danger">
+                  {{ validationErrors.weight[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -110,7 +119,9 @@ export default {
                   required
                   maxlength="10"
                 />
-                <div v-if="validationErrors.weight_unit" class="text-danger">{{ validationErrors.weight_unit[0] }}</div>
+                <div v-if="validationErrors.weight_unit" class="text-danger">
+                  {{ validationErrors.weight_unit[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -121,7 +132,9 @@ export default {
                   placeholder="Enter amount"
                   required
                 />
-                <div v-if="validationErrors.amount" class="text-danger">{{ validationErrors.amount[0] }}</div>
+                <div v-if="validationErrors.amount" class="text-danger">
+                  {{ validationErrors.amount[0] }}
+                </div>
               </div>
 
               <div class="text-center">

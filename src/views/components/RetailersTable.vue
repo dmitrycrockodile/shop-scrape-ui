@@ -2,35 +2,37 @@
 import ArgonButton from "@/components/ArgonButton.vue";
 
 export default {
-    name: 'Retailers Table',
-    props: {
-      "retailers": { type: Array, required: true },
-      "showActions": { type: Boolean, default: true },
-      "revokeAble": { type: Boolean, default: false },
+  name: "Retailers Table",
+  props: {
+    retailers: { type: Array, required: true },
+    showActions: { type: Boolean, default: true },
+    revokeAble: { type: Boolean, default: false },
+  },
+  components: {
+    ArgonButton,
+  },
+  methods: {
+    handleDelete(id) {
+      this.$emit("delete", id);
     },
-    components: {
-        ArgonButton,
+    handleEdit(id) {
+      this.$emit("edit", id);
     },
-    methods: {
-        handleDelete(id) {
-            this.$emit("delete", id);
-        },
-        handleEdit(id) {
-            this.$emit("edit", id);
-        },
-        handleProductsShow(id) {
-            this.$emit("showProducts", id);
-        },
-        handleRevoke(id) {
-            this.$emit("revoke", id);
-        }
-    }
-}
+    handleProductsShow(id) {
+      this.$emit("showProducts", id);
+    },
+    handleRevoke(id) {
+      this.$emit("revoke", id);
+    },
+  },
+};
 </script>
 
 <template>
   <div class="card">
-    <div class="card-header pb-3 d-flex align-items-center justify-content-between">
+    <div
+      class="card-header pb-3 d-flex align-items-center justify-content-between"
+    >
       <h6 class="pe-4">Retailers table</h6>
 
       <slot name="create-button"></slot>
@@ -65,35 +67,51 @@ export default {
               >
                 Website URL
               </th>
-              <th v-if="showActions" class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7">Actions</th>
-              <th v-if="revokeAble" class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7">Revoke</th>
+              <th
+                v-if="showActions"
+                class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7"
+              >
+                Actions
+              </th>
+              <th
+                v-if="revokeAble"
+                class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7"
+              >
+                Revoke
+              </th>
             </tr>
           </thead>
           <tbody>
-            <h6 class="ms-4 mt-2" v-if="!retailers.length">There is no available retailers</h6>
+            <h6 class="ms-4 mt-2" v-if="!retailers.length">
+              There is no available retailers
+            </h6>
             <tr v-for="retailer in retailers" :key="retailer.id">
               <td>
                 <div class="d-flex px-2 py-1">
-                    <p class="text-xs font-weight-bold mb-0">{{retailer.id}}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ retailer.id }}</p>
                 </div>
               </td>
               <td>
                 <img
-                    :src="retailer.logo"
-                    class="avatar avatar-m me-3"
-                    :alt="`${retailer.title}s logo`"
+                  :src="retailer.logo"
+                  class="avatar avatar-m me-3"
+                  :alt="`${retailer.title}s logo`"
                 />
               </td>
               <td class="align-middle text-sm">
                 <p class="font-weight-bold mb-0">{{ retailer.title }}</p>
               </td>
               <td class="align-middle">
-                <span class="badge badge-sm bg-gradient-warning">{{ retailer.currency.symbol }} ({{retailer.currency.name}})</span>
+                <span class="badge badge-sm bg-gradient-warning"
+                  >{{ retailer.currency.symbol }} ({{
+                    retailer.currency.name
+                  }})</span
+                >
               </td>
               <td class="align-middle text-center">
                 <a
                   :href="retailer.url"
-                  class="text-secondary font-weight-bold "
+                  class="text-secondary font-weight-bold"
                   data-toggle="tooltip"
                   data-original-title="Visit website"
                   target="_blank"
@@ -101,27 +119,29 @@ export default {
                 >
               </td>
               <td v-if="showActions" class="align-middle">
-                <argon-button
-                  @click="handleEdit(retailer.id)"
-                  color="primary"
-                  >Edit</argon-button>
+                <argon-button @click="handleEdit(retailer.id)" color="primary"
+                  >Edit</argon-button
+                >
                 <argon-button
                   color="warning"
                   class="ms-2"
                   @click="handleDelete(retailer.id)"
-                >Delete</argon-button>
+                  >Delete</argon-button
+                >
                 <argon-button
                   color="dark"
                   class="ms-2"
                   @click="handleProductsShow(retailer.id)"
-                >Products</argon-button>
+                  >Products</argon-button
+                >
               </td>
               <td v-if="revokeAble" class="align-middle">
                 <argon-button
-                    color="warning"
-                    class="ms-2"
-                    @click="handleRevoke(retailer.id)"
-                >Revoke</argon-button>
+                  color="warning"
+                  class="ms-2"
+                  @click="handleRevoke(retailer.id)"
+                  >Revoke</argon-button
+                >
               </td>
             </tr>
           </tbody>

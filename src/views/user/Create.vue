@@ -21,7 +21,7 @@ export default {
         location: "",
       },
       loading: false,
-      validationErrors: {}
+      validationErrors: {},
     };
   },
   methods: {
@@ -65,7 +65,9 @@ export default {
                   placeholder="Enter email"
                   required
                 />
-                <div v-if="validationErrors.email" class="text-danger">{{ validationErrors.email[0] }}</div>
+                <div v-if="validationErrors.email" class="text-danger">
+                  {{ validationErrors.email[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -77,7 +79,9 @@ export default {
                   placeholder="Enter name"
                   required
                 />
-                <div v-if="validationErrors.name" class="text-danger">{{ validationErrors.name[0] }}</div>
+                <div v-if="validationErrors.name" class="text-danger">
+                  {{ validationErrors.name[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -89,7 +93,9 @@ export default {
                   placeholder="Enter password"
                   required
                 />
-                <div v-if="validationErrors.password" class="text-danger">{{ validationErrors.password[0] }}</div>
+                <div v-if="validationErrors.password" class="text-danger">
+                  {{ validationErrors.password[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -112,7 +118,9 @@ export default {
                   placeholder="Enter location"
                   required
                 />
-                <div v-if="validationErrors.location" class="text-danger">{{ validationErrors.location[0] }}</div>
+                <div v-if="validationErrors.location" class="text-danger">
+                  {{ validationErrors.location[0] }}
+                </div>
               </div>
 
               <div class="text-center">

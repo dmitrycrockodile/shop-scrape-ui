@@ -10,7 +10,7 @@ export default {
   name: "User Edit",
   components: {
     ArgonInput,
-    ArgonButton
+    ArgonButton,
   },
   data() {
     return {
@@ -21,7 +21,7 @@ export default {
         location: "",
       },
       loading: false,
-      validationErrors: {}
+      validationErrors: {},
     };
   },
   computed: {
@@ -30,8 +30,8 @@ export default {
       return this.$route.params.id;
     },
     selectedUser() {
-      return this.getUsers.find(user => user.id == this.userId);
-    }
+      return this.getUsers.find((user) => user.id == this.userId);
+    },
   },
   watch: {
     selectedUser: {
@@ -41,17 +41,17 @@ export default {
           this.updateUserForm = {
             email: newUser.email,
             name: newUser.name,
-            password: "", 
-            location: newUser.location
+            password: "",
+            location: newUser.location,
           };
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     ...mapActions("users", ["updateUser"]),
     async handleUpdate() {
-        this.validationErrors = {};
+      this.validationErrors = {};
       const res = await updateUser(this.updateUserForm, this.userId);
 
       if (res.success) {
@@ -62,8 +62,8 @@ export default {
           this.validationErrors = res.errors;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -86,7 +86,9 @@ export default {
                   placeholder="Enter email"
                   required
                 />
-                <div v-if="validationErrors.email" class="text-danger">{{ validationErrors.email[0] }}</div>
+                <div v-if="validationErrors.email" class="text-danger">
+                  {{ validationErrors.email[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -97,7 +99,9 @@ export default {
                   placeholder="Enter name"
                   required
                 />
-                <div v-if="validationErrors.name" class="text-danger">{{ validationErrors.name[0] }}</div>
+                <div v-if="validationErrors.name" class="text-danger">
+                  {{ validationErrors.name[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -107,7 +111,9 @@ export default {
                   type="password"
                   placeholder="Enter password"
                 />
-                <div v-if="validationErrors.password" class="text-danger">{{ validationErrors.password[0] }}</div>
+                <div v-if="validationErrors.password" class="text-danger">
+                  {{ validationErrors.password[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -117,7 +123,9 @@ export default {
                   type="text"
                   placeholder="Enter location"
                 />
-                <div v-if="validationErrors.location" class="text-danger">{{ validationErrors.location[0] }}</div>
+                <div v-if="validationErrors.location" class="text-danger">
+                  {{ validationErrors.location[0] }}
+                </div>
               </div>
 
               <div class="text-center">

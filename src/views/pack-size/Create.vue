@@ -16,11 +16,11 @@ export default {
       createPackSizeForm: {
         name: "",
         weight: "",
-        weight_unit: "", 
+        weight_unit: "",
         amount: "",
       },
       loading: false,
-      validationErrors: {}
+      validationErrors: {},
     };
   },
   methods: {
@@ -31,7 +31,7 @@ export default {
 
       if (res.success) {
         this.addPackSize(res.data);
-        this.$router.push('/pack-sizes');
+        this.$router.push("/pack-sizes");
       } else {
         if (res.errors) {
           this.validationErrors = res.errors;
@@ -63,7 +63,9 @@ export default {
                   placeholder="Enter pack size name"
                   required
                 />
-                <div v-if="validationErrors.name" class="text-danger">{{ validationErrors.name[0] }}</div>
+                <div v-if="validationErrors.name" class="text-danger">
+                  {{ validationErrors.name[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -76,7 +78,9 @@ export default {
                   required
                   min="0"
                 />
-                <div v-if="validationErrors.weight" class="text-danger">{{ validationErrors.weight[0] }}</div>
+                <div v-if="validationErrors.weight" class="text-danger">
+                  {{ validationErrors.weight[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -89,7 +93,9 @@ export default {
                   required
                   maxlength="10"
                 />
-                <div v-if="validationErrors.weight_unit" class="text-danger">{{ validationErrors.weight_unit[0] }}</div>
+                <div v-if="validationErrors.weight_unit" class="text-danger">
+                  {{ validationErrors.weight_unit[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -101,7 +107,9 @@ export default {
                   placeholder="Enter amount"
                   required
                 />
-                <div v-if="validationErrors.amount" class="text-danger">{{ validationErrors.amount[0] }}</div>
+                <div v-if="validationErrors.amount" class="text-danger">
+                  {{ validationErrors.amount[0] }}
+                </div>
               </div>
 
               <div class="text-center">

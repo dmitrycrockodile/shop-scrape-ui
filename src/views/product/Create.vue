@@ -26,13 +26,13 @@ export default {
       maxImages: 5,
       newImages: [],
       loading: false,
-      validationErrors: {}
+      validationErrors: {},
     };
   },
   methods: {
     ...mapActions("products", ["addProduct"]),
     async handleCreate() {
-        this.validationErrors = {};
+      this.validationErrors = {};
       const res = await createProduct(this.createProductForm, this.newImages);
 
       if (res.success) {
@@ -91,7 +91,9 @@ export default {
                   placeholder="Enter product name"
                   required
                 />
-                <div v-if="validationErrors.title" class="text-danger">{{ validationErrors.title[0] }}</div>
+                <div v-if="validationErrors.title" class="text-danger">
+                  {{ validationErrors.title[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -101,7 +103,9 @@ export default {
                   class="form-control"
                   placeholder="Enter product description"
                 ></textarea>
-                <div v-if="validationErrors.description" class="text-danger">{{ validationErrors.description[0] }}</div>
+                <div v-if="validationErrors.description" class="text-danger">
+                  {{ validationErrors.description[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -112,7 +116,12 @@ export default {
                   placeholder="Enter manufacturer part number"
                   required
                 />
-                <div v-if="validationErrors.manufacturer_part_number" class="text-danger">{{ validationErrors.manufacturer_part_number[0] }}</div>
+                <div
+                  v-if="validationErrors.manufacturer_part_number"
+                  class="text-danger"
+                >
+                  {{ validationErrors.manufacturer_part_number[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -122,12 +131,16 @@ export default {
                   v-model="createProductForm.pack_size_id"
                   name="pack_size"
                 />
-                <div v-if="validationErrors.pack_size_id" class="text-danger">{{ validationErrors.pack_size_id[0] }}</div>
+                <div v-if="validationErrors.pack_size_id" class="text-danger">
+                  {{ validationErrors.pack_size_id[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">New Images</label>
-                <div v-if="validationErrors.images" class="text-danger">{{ validationErrors.images[0] }}</div>
+                <div v-if="validationErrors.images" class="text-danger">
+                  {{ validationErrors.images[0] }}
+                </div>
                 <div
                   v-for="(file, index) in newImages"
                   :key="'new-' + index"
@@ -147,9 +160,12 @@ export default {
                       width="100"
                     />
                   </div>
-                  <div v-if="validationErrors[`images.${index}`]" class="text-danger">
+                  <div
+                    v-if="validationErrors[`images.${index}`]"
+                    class="text-danger"
+                  >
                     {{ validationErrors[`images.${index}`][0] }}
-                </div>
+                  </div>
                 </div>
               </div>
 

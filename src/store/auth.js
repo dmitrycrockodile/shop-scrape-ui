@@ -1,16 +1,9 @@
 const state = {
    user: JSON.parse(localStorage.getItem('user')) || null,
-//    token: JSON.parse(localStorage.getItem('token')) || null,
    status: '',
 }
 
 const mutations = {
-    // AUTH_SUCCESS(state, { token }) {
-    //     state.token = token;
-    //     state.status = '';
-  
-    //     localStorage.setItem('token', JSON.stringify(token));
-    // }, 
     SET_USER(state, { user }) {
         state.user = user;
         localStorage.setItem('user', JSON.stringify(user));
@@ -20,10 +13,8 @@ const mutations = {
     },
     LOGOUT_USER(state) {
         state.user = null;
-        // state.token = null;
 
         localStorage.removeItem('user');
-        // localStorage.removeItem('token');
     }
 }
 
@@ -32,8 +23,15 @@ const actions = {
         commit('SET_USER', { user });
         dispatch('retailers/setRetailers', user.retailers, { root: true })
     },
-    async logout({ commit }) {
+    async logout({ commit, dispatch }) {
         commit('LOGOUT_USER');
+
+        dispatch('currencies/setCurrencies', [], { root: true });
+        dispatch('packSizes/setPackSizes', [], { root: true });
+        dispatch('products/setProducts', [], { root: true });
+        dispatch('products/setMetaData', [], { root: true });
+        dispatch('retailers/setRetailers', [], { root: true });
+        dispatch('users/setUsers', [], { root: true });
     },
     async clearExpiredSession({ commit }) {
         commit('LOGOUT_USER');
@@ -44,7 +42,10 @@ const getters = {
     isAuthenticated(state) {
         return !!state.user;
     },
-    getUserData: (state) => state.user
+    isAdmin(state) {
+        return state.user?.admin || false;
+    },
+    getUserData: (state) => state.user,
 }
 
 export default {

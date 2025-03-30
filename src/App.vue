@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Sidenav from "./examples/Sidenav";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import AppFooter from "@/examples/Footer.vue";
@@ -25,6 +25,8 @@ export default {
     AppFooter,
   },
   computed: {
+    ...mapGetters("auth", ["isAuthenticated"]),
+
     ...mapState("ui", [
       "isNavFixed",
       "darkMode",
@@ -52,22 +54,23 @@ export default {
 </script>
 
 <template>
-  <div
-    v-show="layout === 'landing'"
-    class="landing-bg h-100 bg-gradient-primary position-fixed w-100"
-  ></div>
+    <div
+        v-show="layout === 'landing'"
+        class="landing-bg h-100 bg-gradient-primary position-fixed w-100"
+    ></div>
 
-  <sidenav v-if="showSidenav" />
-
-  <main
-    class="main-content position-relative max-height-vh-100 h-100 border-radius-lg d-flex flex-column min-vh-100"
-  >
-    <!-- nav -->
-
-    <navbar :class="[navClasses]" v-if="showNavbar" />
-
-    <router-view />
-
-    <app-footer v-show="showFooter" />
-  </main>
+    <div v-if="!isAuthenticated">
+        <router-view />
+      </div>
+    
+      <div v-else>
+        <sidenav v-if="showSidenav" />
+        <main
+          class="main-content position-relative max-height-vh-100 h-100 border-radius-lg d-flex flex-column min-vh-100"
+        >
+          <navbar :class="[navClasses]" v-if="showNavbar" />
+          <router-view />
+          <app-footer v-show="showFooter" />
+        </main>
+      </div>
 </template>

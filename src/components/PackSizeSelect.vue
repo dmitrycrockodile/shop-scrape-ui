@@ -1,33 +1,3 @@
-<template>
-  <div class="dropdown__wrapper" ref="dropDown" :name="name">
-    <div
-      class="dropdown__selected-option"
-      @click="isDropdownVisible = !isDropdownVisible"
-    >
-      {{
-        selectedOption
-          ? `${selectedOption.name} (${selectedOption.weight}, ${selectedOption.amount} items)`
-          : "Select Pack Size"
-      }}
-      <i
-        :class="`flaticon-down-arrow ${isDropdownVisible ? 'active' : ''}`"
-      ></i>
-    </div>
-    <transition name="slide-fade">
-      <div class="options__wrapper" v-if="isDropdownVisible">
-        <div
-          :class="`option ${isDisabledOptions[option.id] ? 'disabled' : ''}`"
-          v-for="(option, i) in options"
-          @click.prevent="!isDisabledOptions[option.id] && selectOption(option)"
-          :key="i"
-        >
-          {{ option.name }} ({{ option.weight }}, {{ option.amount }} items)
-        </div>
-      </div>
-    </transition>
-  </div>
-</template>
-
 <script>
 export default {
   data() {
@@ -84,6 +54,36 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div class="dropdown__wrapper" ref="dropDown" :name="name">
+    <div
+      class="dropdown__selected-option"
+      @click="isDropdownVisible = !isDropdownVisible"
+    >
+      {{
+        selectedOption
+          ? `${selectedOption.name} (${selectedOption.weight}, ${selectedOption.amount} items)`
+          : "Select Pack Size"
+      }}
+      <i
+        :class="`flaticon-down-arrow ${isDropdownVisible ? 'active' : ''}`"
+      ></i>
+    </div>
+    <transition name="slide-fade">
+      <div class="options__wrapper" v-if="isDropdownVisible">
+        <div
+          :class="`option ${isDisabledOptions[option.id] ? 'disabled' : ''}`"
+          v-for="(option, i) in options"
+          @click.prevent="!isDisabledOptions[option.id] && selectOption(option)"
+          :key="i"
+        >
+          {{ option.name }} ({{ option.weight }}, {{ option.amount }} items)
+        </div>
+      </div>
+    </transition>
+  </div>
+</template>
 
 <style scoped>
 .dropdown__wrapper {

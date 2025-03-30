@@ -106,7 +106,10 @@ export default {
                 <p class="font-weight-bold mb-0">{{ user.location }}</p>
               </td>
               <td v-if="showActions" class="align-middle">
-                <argon-button @click="handleEdit(user.id)" class="p-2 w-25" color="primary"
+                <argon-button
+                  @click="handleEdit(user.id)"
+                  class="p-2 w-25"
+                  color="primary"
                   >Edit</argon-button
                 >
                 <argon-button

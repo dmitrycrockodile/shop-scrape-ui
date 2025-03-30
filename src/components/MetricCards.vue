@@ -1,3 +1,12 @@
+<script>
+export default {
+  name: "MetricsList",
+  props: {
+    metrics: Array,
+  },
+};
+</script>
+
 <template>
   <div class="container mt-4">
     <div class="row">
@@ -46,25 +55,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "MetricsList",
-  props: {
-    metrics: Array,
-  },
-};
-</script>
-
 <style scoped>
 .list-group-item {
   border: none;
   background: transparent;
 }
 .retailer-logo {
-    width: 280px;
-    height: auto;
-    min-height: 180px;
-    max-height: 200px;
-    border-radius: 5px;
-  }
+  width: 280px;
+  height: auto;
+  min-height: 180px;
+  max-height: 200px;
+  border-radius: 5px;
+}
 </style>

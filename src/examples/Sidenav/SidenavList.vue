@@ -1,5 +1,6 @@
 <script>
 import { useRoute } from "vue-router";
+import { mapGetters } from "vuex";
 
 import SidenavItem from "./SidenavItem.vue";
 
@@ -13,6 +14,9 @@ export default {
             const routeArr = route.path.split("/");
             return routeArr[1];
         },
+    },
+    computed: {
+        ...mapGetters('auth', ['isAdmin'])
     }
 }
 </script>
@@ -60,6 +64,7 @@ export default {
 
       <li class="nav-item">
         <sidenav-item
+          v-if="isAdmin"
           to="/users"
           :class="getRoute() === 'users' ? 'active' : ''"
           navText="Users"

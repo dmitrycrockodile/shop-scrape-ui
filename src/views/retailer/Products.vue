@@ -69,7 +69,9 @@ export default {
         </argon-button>
       </div>
       <div class="card-body px-0 pt-0 pb-2">
-        <h6 v-if="!products.length" class="ps-4">The products for this retailer are not provided</h6>
+        <h6 v-if="!products.length" class="ps-4">
+          The products for this retailer are not provided
+        </h6>
         <div class="table-responsive p-0">
           <ProductDetails :products="products" />
         </div>

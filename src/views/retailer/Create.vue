@@ -22,18 +22,18 @@ export default {
         currency_id: null,
       },
       loading: false,
-      validationErrors: {}
+      validationErrors: {},
     };
   },
   computed: {
     ...mapGetters({
-        currencies: 'currencies/getCurrencies'
-    })
+      currencies: "currencies/getCurrencies",
+    }),
   },
   methods: {
     ...mapActions("retailers", ["addRetailer"]),
     async handleCreate() {
-        this.validationErrors = {};
+      this.validationErrors = {};
       const res = await createRetailer(
         this.createRetailerForm,
         this.$refs.logoFile.files[0]
@@ -48,7 +48,7 @@ export default {
         }
       }
     },
-  }
+  },
 };
 </script>
 
@@ -71,7 +71,9 @@ export default {
                   placeholder="Enter retailer name"
                   required
                 />
-                <div v-if="validationErrors.title" class="text-danger">{{ validationErrors.title[0] }}</div>
+                <div v-if="validationErrors.title" class="text-danger">
+                  {{ validationErrors.title[0] }}
+                </div>
               </div>
 
               <div class="mb-3">
@@ -90,7 +92,9 @@ export default {
                     accept="image/*"
                     placeholder="Upload a new logo"
                   />
-                  <div v-if="validationErrors.logo" class="text-danger">{{ validationErrors.logo[0] }}</div>
+                  <div v-if="validationErrors.logo" class="text-danger">
+                    {{ validationErrors.logo[0] }}
+                  </div>
                 </div>
               </div>
 
@@ -102,7 +106,9 @@ export default {
                   placeholder="Enter URL"
                   required
                 />
-                <div v-if="validationErrors.url" class="text-danger">{{ validationErrors.url[0] }}</div>
+                <div v-if="validationErrors.url" class="text-danger">
+                  {{ validationErrors.url[0] }}
+                </div>
               </div>
 
               <div class="mb-3 w-25">
@@ -112,7 +118,9 @@ export default {
                   v-model="createRetailerForm.currency_id"
                   name="currency"
                 />
-                <div v-if="validationErrors.currency_id" class="text-danger">{{ validationErrors.currency_id[0] }}</div>
+                <div v-if="validationErrors.currency_id" class="text-danger">
+                  {{ validationErrors.currency_id[0] }}
+                </div>
               </div>
 
               <div class="text-center">
