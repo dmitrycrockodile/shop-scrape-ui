@@ -67,7 +67,7 @@ export default {
             <router-link
               class="nav-link d-flex align-items-center me-2 active"
               aria-current="page"
-              to="/dashboard-default"
+              to="/dashboard"
             >
               <i
                 class="fa fa-chart-pie opacity-6 me-1"
@@ -85,16 +85,6 @@ export default {
                 :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
               Profile
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link me-2" to="/signup">
-              <i
-                class="fas fa-user-circle opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Sign Up
             </router-link>
           </li>
 

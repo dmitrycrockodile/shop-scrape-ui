@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Dashboard from "../views/Dashboard.vue";
 import Profile from "../views/Profile.vue";
 import Signin from "../views/Signin.vue";
 
@@ -7,7 +6,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard-default",
+    redirect: "/dashboard",
   },
   {
     path: "/products",
@@ -100,9 +99,9 @@ const routes = [
     component: () => import("../views/currency/Index.vue"),
   },
   {
-    path: "/dashboard-default",
+    path: "/dashboard",
     name: "Dashboard",
-    component: Dashboard,
+    component: () => import("../views/metric/Dashboard.vue"),
   },
   {
     path: "/profile",

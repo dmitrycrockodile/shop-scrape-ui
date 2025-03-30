@@ -1,11 +1,16 @@
 const state = {
     packSizes: JSON.parse(localStorage.getItem('packSizes')) || null,
+    meta: JSON.parse(localStorage.getItem('meta')) || [],
 };
 
 const mutations = {
     SET_PACKSIZES(state, packSizes) {
         state.packSizes = packSizes;
         localStorage.setItem('packSizes', JSON.stringify(packSizes));
+    },
+    SET_META(state, meta) {
+        state.meta = meta;
+        localStorage.setItem('meta', JSON.stringify(meta));
     },
     ADD_PACKSIZE(state, packSize) {
         state.packSizes.push(packSize);
@@ -26,6 +31,14 @@ const actions = {
             commit("SET_PACKSIZES", packSizes);
         } catch (error) {
             console.error("Error setting packSizes:", error);
+        } 
+    },
+
+    async setMetaData({ commit }, meta) {
+        try {
+            commit("SET_META", meta);
+        } catch (error) {
+            console.error("Error setting products:", error);
         } 
     },
 
@@ -64,7 +77,10 @@ const actions = {
 const getters = {
     getPackSizes(state) {
         return state.packSizes ? state.packSizes : [];
-    }
+    },
+    getMetadata(state) {
+        return state.meta ? state.meta : [];
+    },
 };
 
 export default {

@@ -1,7 +1,5 @@
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
-import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import { mapState, mapActions } from "vuex";
 
@@ -24,9 +22,7 @@ export default {
         }
     },
     components: {
-        Navbar,
         ArgonInput,
-        ArgonSwitch,
         ArgonButton
     },
     computed: {
@@ -57,17 +53,6 @@ export default {
 };
 </script>
 <template>
-    <div class="container top-0 position-sticky z-index-sticky">
-        <div class="row">
-        <div class="col-12">
-            <navbar
-                isBlur="blur  border-radius-lg my-3 py-2 start-0 end-0 mx-4 shadow"
-            v-bind:darkMode="true"
-            isBtn="bg-gradient-success"
-            />
-        </div>
-        </div>
-    </div>
     <main class="mt-0 main-content">
         <section>
         <div class="page-header min-vh-100">
@@ -103,9 +88,6 @@ export default {
                             isRequired
                         />
                         </div>
-                        <argon-switch id="rememberMe" name="remember-me"
-                        >Remember me</argon-switch
-                        >
 
                         <div class="text-center">
                         <argon-button
@@ -118,16 +100,6 @@ export default {
                         >
                         </div>
                     </form>
-                    </div>
-                    <div class="px-1 pt-0 text-center card-footer px-lg-2">
-                    <p class="mx-auto mb-4 text-sm">
-                        Don't have an account?
-                        <router-link :to="{name: 'Signup'}"
-                        href="javascript:;"
-                        class="text-success text-gradient font-weight-bold"
-                        >Sign up
-                        </router-link>
-                    </p>
                     </div>
                 </div>
                 </div>

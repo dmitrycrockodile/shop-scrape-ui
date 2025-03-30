@@ -20,7 +20,7 @@ const mutations = {
     },
     UPDATE_USER_RETAILERS(state, { id, retailers }) {
         const user = state.users.find(user => user.id == id);
-        console.log(id)
+        
         if (user) {
             user.retailers = retailers;
         }

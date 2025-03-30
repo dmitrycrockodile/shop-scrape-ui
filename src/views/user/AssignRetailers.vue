@@ -36,7 +36,6 @@ export default {
                 const res = await assignRetailers(this.userId, this.retailersToAdd);
                 
                 if (res.success) {
-                    console.log(res)
                     this.updateUserRetailers({ id: this.userId, retailers: res.data});
                     this.$router.push(`/users/${this.userId}/retailers`);
                 } else {

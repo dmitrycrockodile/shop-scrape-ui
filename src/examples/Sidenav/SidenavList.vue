@@ -48,7 +48,7 @@ export default {
 
       <li class="nav-item">
         <sidenav-item
-          to="/dashboard-default"
+          to="/dashboard"
           :class="getRoute() === 'dashboard-default' ? 'active' : ''"
           navText="Dashboard"
         >
@@ -92,26 +92,6 @@ export default {
         >
           <template v-slot:icon>
             <i class="ni ni-money-coins text-info text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
-
-      <li class="mt-3 nav-item">
-        <h6
-          class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6 ms-2"
-        >
-          ACCOUNT PAGES
-        </h6>
-      </li>
-
-      <li class="nav-item">
-        <sidenav-item
-          to="/profile"
-          :class="getRoute() === 'profile' ? 'active' : ''"
-          navText="Profile"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>
