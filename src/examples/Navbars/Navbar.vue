@@ -1,5 +1,6 @@
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import { handleLogout } from "@/services/authService";
 import Breadcrumbs from "../Breadcrumbs.vue";
 
 export default {
@@ -26,8 +27,13 @@ export default {
   methods: {
     ...mapActions("auth", ["logout"]),
     ...mapActions("ui", ["minimizeSidebar"]),
-    handleLogout() {
-        this.logout().then(() => this.$router.push({ name: "Signin" }));
+    async handleLogout() {
+        const res = await handleLogout();
+
+        if (res.success) {
+            this.$router.push({ name: "Signin" })
+            this.logout();
+        } 
     },
     closeMenu() {
       setTimeout(() => {

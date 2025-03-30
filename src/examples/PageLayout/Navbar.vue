@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { handleLogout } from "@/services/authService";
 
 export default {
   props: {
@@ -24,7 +25,12 @@ export default {
   methods: {
     ...mapActions("auth", ["logout"]),
     handleLogout() {
-      this.logout().then(() => this.$router.push({ name: "Signin" }));
+        const res = await handleLogout();
+
+        if (res.success) {
+            this.$router.push({ name: "Signin" })
+            this.logout();
+        } 
     },
   },
   computed: {

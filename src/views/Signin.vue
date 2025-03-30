@@ -2,23 +2,30 @@
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import { mapState, mapActions } from "vuex";
+import { handleLogin } from "@/services/authService";
 
 export default {
     data() {
         return {
             email: '',
-            password: null
+            password: null,
+            validationErrors: {}
         }
     },
     methods: {
         ...mapActions('auth', ['login']),
-        handleSubmit() {
-            this.login({email: this.email, password: this.password})
-            .then((res) => {
-                if (!res.response) {
-                    this.$router.push({ name: 'Dashboard' });
+        async handleSubmit() {
+            this.validationErrors = {};
+            const res = await handleLogin({email: this.email, password: this.password});
+
+            if (res.success) {
+                this.login(res.data);
+                this.$router.push('/products')
+            } else {
+                if (res.errors) {
+                    this.validationErrors = res.errors;
                 }
-            });
+            }
         }
     },
     components: {
@@ -77,6 +84,7 @@ export default {
                             v-model.trim.lazy="email"
                             isRequired
                         />
+                        <div v-if="validationErrors.email" class="text-danger">{{ validationErrors.email[0] }}</div>
                         </div>
                         <div class="mb-3">
                         <argon-input
@@ -87,6 +95,7 @@ export default {
                             v-model.trim.lazy="password"
                             isRequired
                         />
+                        <div v-if="validationErrors.password" class="text-danger">{{ validationErrors.password[0] }}</div>
                         </div>
 
                         <div class="text-center">
