@@ -1,6 +1,7 @@
 <script>
 import ProductDetails from "@/components/ProductDetails.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
+import Pagination from "@/components/Pagination.vue";
 import { getProducts } from "@/services/retailersService";
 
 export default {
@@ -21,6 +22,7 @@ export default {
   components: {
     ProductDetails,
     ArgonButton,
+    Pagination
   },
   computed: {
     retailerId() {
@@ -76,59 +78,7 @@ export default {
           <ProductDetails :products="products" />
         </div>
 
-        <div v-if="pagination.last_page > 1" class="row">
-          <div
-            class="col-12 d-flex justify-content-center wow fadeInUp animated"
-          >
-            <ul class="pagination text-center">
-              <li v-if="pagination.current_page !== 1" class="next">
-                <a @click.prevent="setPage(1)" href="#0">
-                  <i class="fa-solid fa-arrow-left"></i>
-                </a>
-              </li>
-
-              <template v-for="link in pagination.links" :key="link.label">
-                <template v-if="Number(link.label)">
-                  <li
-                    v-if="
-                      (pagination.current_page - link.label > -2 &&
-                        pagination.current_page - link.label < 2) ||
-                      Number(link.label) === 1 ||
-                      Number(link.label) == pagination.last_page
-                    "
-                  >
-                    <a
-                      @click.prevent="setPage(link.label)"
-                      href="#0"
-                      :class="link.active ? 'active' : ''"
-                      >{{ link.label }}</a
-                    >
-                  </li>
-                  <li
-                    v-else-if="
-                      pagination.current_page - link.label == 2 ||
-                      pagination.current_page - link.label == -2
-                    "
-                  >
-                    <a href="#0"> ... </a>
-                  </li>
-                </template>
-              </template>
-
-              <li
-                v-if="pagination.current_page !== pagination.last_page"
-                class="next"
-              >
-                <a
-                  @click.prevent="setPage(pagination.current_page + 1)"
-                  href="#0"
-                >
-                  <i class="fa-solid fa-arrow-right"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <Pagination v-if="pagination.last_page > 1" :pagination="pagination" @setPage="setPage" />
       </div>
     </div>
   </div>
