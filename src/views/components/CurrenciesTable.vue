@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <div class="card w-75 m-auto">
+  <div class="card m-auto">
     <div
       class="card-header pb-3 d-flex align-items-center justify-content-between"
     >

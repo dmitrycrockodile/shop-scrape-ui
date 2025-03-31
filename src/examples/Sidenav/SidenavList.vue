@@ -28,12 +28,24 @@ export default {
     <ul class="navbar-nav pb-2">
         <li class="nav-item">
             <sidenav-item
+              to="/dashboard"
+              :class="getRoute() === 'dashboard-default' ? 'active' : ''"
+              navText="Dashboard"
+            >
+              <template v-slot:icon>
+                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+              </template>
+            </sidenav-item>
+        </li>
+
+        <li class="nav-item">
+            <sidenav-item
               to="/products"
               :class="getRoute() === 'products' ? 'active' : ''"
               navText="Products"
             >
               <template v-slot:icon>
-                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
               </template>
             </sidenav-item>
         </li>
@@ -49,18 +61,6 @@ export default {
               </template>
             </sidenav-item>
         </li>
-
-      <li class="nav-item">
-        <sidenav-item
-          to="/dashboard"
-          :class="getRoute() === 'dashboard-default' ? 'active' : ''"
-          navText="Dashboard"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
 
       <li class="nav-item">
         <sidenav-item
