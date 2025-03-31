@@ -25,7 +25,7 @@ export default {
     class="collapse navbar-collapse w-auto h-auto h-100"
     id="sidenav-collapse-main"
   >
-    <ul class="navbar-nav">
+    <ul class="navbar-nav pb-2">
         <li class="nav-item">
             <sidenav-item
               to="/products"

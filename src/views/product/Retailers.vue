@@ -31,7 +31,7 @@ export default {
 <template>
   <div class="container-fluid py-4 flex-grow-1">
     <div class="row">
-      <div class="col-lg-8 col-md-8 mx-auto">
+      <div class="col-md-8 mx-auto">
         <RetailersTable :retailers="retailers" :showActions="false" />
       </div>
     </div>

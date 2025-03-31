@@ -34,15 +34,10 @@ export default {
       <slot name="create-button"></slot>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
-      <div class="table-responsive p-0">
+      <div class="table-responsive ps-4">
         <table class="table align-items-center mb-0 fs-7">
           <thead>
             <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                ID
-              </th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
               >
@@ -81,11 +76,6 @@ export default {
               There is no available users
             </h6>
             <tr v-for="user in users" :key="user.id">
-              <td>
-                <div class="d-flex px-2 py-1">
-                  <p class="text-xs font-weight-bold mb-0">{{ user.id }}</p>
-                </div>
-              </td>
               <td>
                 <p class="font-weight-bold mb-0">{{ user.name }}</p>
               </td>

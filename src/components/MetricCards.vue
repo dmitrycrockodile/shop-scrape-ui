@@ -29,9 +29,6 @@ export default {
                 />
               </li>
               <li class="list-group-item">
-                <strong>Retailer ID:</strong> {{ metric.retailer_id }}
-              </li>
-              <li class="list-group-item">
                 <strong>Average Rating:</strong>
                 {{ metric.avg_rating.toFixed(2) }}
               </li>
@@ -43,9 +40,6 @@ export default {
               <li class="list-group-item">
                 <strong>Average Images Count:</strong>
                 {{ metric.avg_images_count.toFixed(2) }}
-              </li>
-              <li class="list-group-item">
-                <strong>Date:</strong> {{ metric.date }}
               </li>
             </ul>
           </div>

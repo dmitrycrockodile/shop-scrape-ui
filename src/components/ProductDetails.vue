@@ -57,9 +57,6 @@ export default {
 
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
-                <strong>ID:</strong> {{ product.id }}
-              </li>
-              <li class="list-group-item">
                 <strong>Part #:</strong> {{ product.manufacturer_part_number }}
               </li>
               <li class="list-group-item">
