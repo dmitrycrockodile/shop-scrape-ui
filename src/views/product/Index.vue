@@ -1,6 +1,6 @@
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
-import ProductDetails from "@/components/ProductDetails.vue";
+import ProductsTable from "../components/ProductsTable.vue";
 import { mapGetters, mapActions } from "vuex";
 import { fetchProducts } from "@/services/productsService";
 import Pagination from "@/components/Pagination.vue";
@@ -13,14 +13,14 @@ export default {
   data() {
     return {
       page: 1,
-      dataPerPage: 9,
+      dataPerPage: 25,
       // isPageLoading: true,
       // isProductsLoading: true,
     };
   },
   components: {
     ArgonButton,
-    ProductDetails,
+    ProductsTable,
     Pagination,
   },
   computed: {
@@ -85,7 +85,7 @@ export default {
           You do not have any products
         </h6>
         <div class="table-responsive p-0">
-          <ProductDetails :products="products" />
+          <ProductsTable :products="products" />
         </div>
         <Pagination
           v-if="pagination.last_page > 1"
