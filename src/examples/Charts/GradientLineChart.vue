@@ -64,22 +64,22 @@ const initChart = () => {
       scales: {
         y: {
           grid: {
-            drawBorder: false,
+            drawBorder: true,
             display: true,
             drawOnChartArea: true,
-            drawTicks: false,
+            drawTicks: true,
             borderDash: [5, 5],
           },
           ticks: {
             display: true,
             padding: 10,
-            color: "#fbfbfb",
+            color: "#ccc",
             font: {
               size: 11,
               family: "Open Sans",
               style: "normal",
               lineHeight: 2,
-            },
+            }
           },
         },
         x: {

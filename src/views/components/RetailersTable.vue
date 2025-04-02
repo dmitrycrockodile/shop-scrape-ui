@@ -31,13 +31,14 @@ export default {
 <template>
   <div class="card">
     <div
-      class="card-header pb-3 d-flex align-items-center justify-content-between"
+      class="card-header pb-4 d-flex align-items-center"
     >
-      <h6 class="pe-4">Retailers table</h6>
-
-      <slot name="create-button"></slot>
+      <h6 class="pe-5 mb-0">Retailers table</h6>
+      <div>
+          <slot name="create-button"></slot>
+      </div>
     </div>
-    <div class="card-body px-0 pt-0 pb-2 ps-4 pe-2">
+    <div class="card-body px-0 pt-2 pb-2 ps-4 pe-2">
       <div class="table-responsive p-0">
         <table class="table align-items-center mb-0 fs-7">
           <thead>

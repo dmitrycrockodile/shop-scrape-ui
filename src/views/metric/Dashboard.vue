@@ -39,6 +39,17 @@ export default {
         labels: [],
         datasets: [],
       },
+      chartColors: [
+        "rgba(75, 192, 192, 1)", // blue
+        "rgba(153, 102, 255, 1)", // purple
+        "rgba(255, 159, 64, 1)",  // orange
+        "rgba(255, 99, 132, 1)",  // red
+        "rgba(54, 162, 235, 1)",  // light blue
+        "rgba(255, 205, 86, 1)",  // yellow
+        "rgba(231, 76, 60, 1)",   // red
+        "rgba(46, 204, 113, 1)",  // green
+        "rgba(52, 152, 219, 1)"   // blue
+      ]
     };
   },
   methods: {
@@ -110,7 +121,8 @@ export default {
         this.ratingChartData.datasets.push({
           label: metric.retailer_title,
           data: uniqueDates.map((date) => ratingMap.get(date) ?? null),
-          borderColor: `rgba(${i * 50 + 75}, 100, 192, 1)`,
+          borderColor: this.chartColors[i % this.chartColors.length],
+          backgroundColor:  `rgba(${i * 50 + 75}, 100, 192, 0.05)`,
           fill: false,
         });
       });
@@ -133,7 +145,8 @@ export default {
         this.pricingChartData.datasets.push({
           label: metric.retailer_title,
           data: uniqueDates.map((date) => priceMap.get(date) ?? null),
-          borderColor: `rgba(${i * 50 + 75}, 100, 192, 1)`,
+          borderColor: this.chartColors[i % this.chartColors.length],
+          backgroundColor:  `rgba(${i * 50 + 75}, 100, 192, 0.1)`,
           fill: false,
         });
       });

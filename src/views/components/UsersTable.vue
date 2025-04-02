@@ -27,9 +27,9 @@ export default {
 <template>
   <div class="card">
     <div
-      class="card-header pb-3 d-flex align-items-center justify-content-between"
+      class="card-header pb-4 d-flex align-items-center"
     >
-      <h6 class="pe-4">Users</h6>
+      <h6 class="pe-5 mb-0">Users</h6>
 
       <slot name="create-button"></slot>
     </div>
