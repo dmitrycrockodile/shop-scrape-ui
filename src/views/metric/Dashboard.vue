@@ -2,10 +2,12 @@
 import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
 import MetricCards from "@/components/MetricCards.vue";
 import Pagination from "@/components/Pagination.vue";
+import ArgonButton from "@/components/ArgonButton.vue";
 import {
   fetchMetrics,
   fetchWeeklyRatings,
   fetchWeeklyPricings,
+  downloadMetricsCSV,
 } from "@/services/metricsService";
 import dayjs from "dayjs";
 
@@ -14,7 +16,8 @@ export default {
   components: {
     GradientLineChart,
     MetricCards,
-    Pagination
+    Pagination,
+    ArgonButton
   },
   mounted() {
     this.handleMetricsFetch();
@@ -151,6 +154,9 @@ export default {
         });
       });
     },
+    async downloadCSV() {
+       await downloadMetricsCSV(this.filters.start_date, this.filters.end_date);
+    },
   },
   watch: {
     "filters.page": function () {
@@ -203,11 +209,21 @@ export default {
           class="form-control"
         />
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <button class="btn btn-primary w-100 mb-0" @click="handleMetricsFetch">
           Apply Filter
         </button>
       </div>
+
+      <div class="col-lg-1">
+      <argon-button
+        type="submit"
+        color="success"
+        @click="downloadCSV()"
+       >
+          Export
+       </argon-button>
+        </div>
     </div>
 
     <div class="row mt-4">
