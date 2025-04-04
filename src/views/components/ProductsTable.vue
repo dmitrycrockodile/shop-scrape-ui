@@ -76,8 +76,8 @@ export default {
                   <img
                     v-if="product.images.length"
                     :src="product.images[0].file_url"
-                    class="avatar avatar-m me-3 product__img"
                     :alt="product.file_name"
+                    class="avatar avatar-m me-3 product__img"
                   />
                 </td>
                 <td class="align-middle text-sm">

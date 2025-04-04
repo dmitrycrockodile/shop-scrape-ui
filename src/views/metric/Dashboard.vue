@@ -31,8 +31,8 @@ export default {
       filters: {
         dataPerPage: 9,
         page: 1,
-        start_date: null,
-        end_date: null,
+        startDate: null,
+        endDate: null,
       },
       ratingChartData: {
         labels: [],
@@ -145,7 +145,7 @@ export default {
       });
     },
     async downloadCSV() {
-      await downloadMetricsCSV(this.filters.start_date, this.filters.end_date);
+      await downloadMetricsCSV(this.filters.startDate, this.filters.endDate);
     },
   },
   watch: {
@@ -182,20 +182,20 @@ export default {
 
     <div class="row mb-4 mt-5 align-items-end">
       <div class="col-lg-3">
-        <label for="start_date">Start Date:</label>
+        <label for="startDate">Start Date:</label>
         <input
           type="date"
-          id="start_date"
-          v-model="filters.start_date"
+          id="startDate"
+          v-model="filters.startDate"
           class="form-control"
         />
       </div>
       <div class="col-lg-3">
-        <label for="end_date">End Date:</label>
+        <label for="endDate">End Date:</label>
         <input
           type="date"
-          id="end_date"
-          v-model="filters.end_date"
+          id="endDate"
+          v-model="filters.endDate"
           class="form-control"
         />
       </div>

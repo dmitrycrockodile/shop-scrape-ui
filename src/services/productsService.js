@@ -120,3 +120,38 @@ export const uploadProductsCSV = async (formData) => {
     return handleError(err);
   }
 };
+
+export const downloadProductsCSV = async (startDate, endDate, retailers) => {
+    try {
+      const res = await axios.post(`${BASE_API_URL}/products/export`, {
+          startDate,
+          endDate,
+          retailers
+        },
+        {
+            responseType: 'blob'
+        },
+      );
+
+      console.log(res)
+      const contentDisposition = res.headers['content-disposition'];
+      let fileName = 'products.csv';
+      if (contentDisposition) {
+        const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+        if (fileNameMatch && fileNameMatch[1]) {
+          fileName = fileNameMatch[1];
+        }
+      }
+    
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(res.data);
+      link.download = fileName;    
+      link.click();
+  
+      window.URL.revokeObjectURL(link.href);
+
+      return res;
+    } catch (err) {
+      console.error('CSV Download Error:', err);
+    }
+  };

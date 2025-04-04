@@ -76,7 +76,6 @@ export default {
     >
       <template #create-button>
         <argon-button
-          v-if="isAdmin"
           type="submit"
           color="primary"
           @click="$router.push('/pack-sizes/create')"
