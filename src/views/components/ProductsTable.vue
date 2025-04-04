@@ -95,7 +95,6 @@ export default {
                 </td>
                 <td class="align-middle">
                     <argon-button
-                    v-if="isAdmin"
                     color="primary"
                     @click="$router.push({ path: `products/${product.id}/edit` })"
                     >Edit</argon-button

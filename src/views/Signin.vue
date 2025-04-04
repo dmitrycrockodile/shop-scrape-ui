@@ -23,7 +23,7 @@ export default {
 
       if (res.success) {
         this.login(res.data);
-        this.$router.push("/products");
+        this.$router.push("/dashboard");
       } else {
         if (res.errors) {
           this.validationErrors = res.errors;

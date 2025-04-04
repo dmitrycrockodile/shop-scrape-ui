@@ -124,6 +124,8 @@ export default {
   left: 0;
   z-index: 101;
   border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .option {

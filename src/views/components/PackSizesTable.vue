@@ -1,5 +1,6 @@
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Pack Sizes Table",
@@ -18,11 +19,14 @@ export default {
       this.$emit("edit", id);
     },
   },
+  computed: {
+    ...mapGetters("auth", ["isAdmin"]),
+  },
 };
 </script>
 
 <template>
-  <div class="card">
+  <div class="card mb-4">
     <div
       class="card-header pb-4 d-flex align-items-center"
     >
@@ -51,7 +55,6 @@ export default {
                 Amount
               </th>
               <th
-                v-if="showActions"
                 class="text-uppercase text-xxs text-secondary font-weight-bolder opacity-7"
               >
                 Actions
@@ -72,11 +75,12 @@ export default {
               <td class="align-middle text-center">
                 <p class="font-weight-bold mb-0">{{ packSize.amount }}</p>
               </td>
-              <td v-if="showActions" class="align-middle">
-                <argon-button @click="handleEdit(packSize.id)" class="p-2 w-25" color="primary"
+              <td class="align-middle">
+                <argon-button @click="handleEdit(packSize.id)" class="p-2 w-50" color="primary"
                   >Edit</argon-button
                 >
                 <argon-button
+                  v-if="isAdmin"
                   color="warning"
                   class="ms-2 p-2"
                   @click="handleDelete(packSize.id)"

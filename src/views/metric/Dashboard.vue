@@ -17,7 +17,7 @@ export default {
     GradientLineChart,
     MetricCards,
     Pagination,
-    ArgonButton
+    ArgonButton,
   },
   mounted() {
     this.handleMetricsFetch();
@@ -45,14 +45,14 @@ export default {
       chartColors: [
         "rgba(75, 192, 192, 1)", // blue
         "rgba(153, 102, 255, 1)", // purple
-        "rgba(255, 159, 64, 1)",  // orange
-        "rgba(255, 99, 132, 1)",  // red
-        "rgba(54, 162, 235, 1)",  // light blue
-        "rgba(255, 205, 86, 1)",  // yellow
-        "rgba(231, 76, 60, 1)",   // red
-        "rgba(46, 204, 113, 1)",  // green
-        "rgba(52, 152, 219, 1)"   // blue
-      ]
+        "rgba(255, 159, 64, 1)", // orange
+        "rgba(255, 99, 132, 1)", // red
+        "rgba(54, 162, 235, 1)", // light blue
+        "rgba(255, 205, 86, 1)", // yellow
+        "rgba(231, 76, 60, 1)", // red
+        "rgba(46, 204, 113, 1)", // green
+        "rgba(52, 152, 219, 1)", // blue
+      ],
     };
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
         const res = await fetchWeeklyRatings();
 
         if (res.success) {
-          this.createRatingCharData(res.data);
+          this.createRatingChartData(res.data);
         }
       } catch (error) {
         console.error("Error fetching metrics:", error);
@@ -88,55 +88,45 @@ export default {
         const res = await fetchWeeklyPricings();
 
         if (res.success) {
-          this.createPricingCharData(res.data);
+          this.createPricingChartData(res.data);
         }
       } catch (error) {
         console.error("Error fetching metrics:", error);
       }
     },
-    createRatingCharData(metrics) {
+    createRatingChartData(metrics) {
       this.ratingChartData.datasets = [];
 
-      const uniqueDates = [
-        ...new Set(
-          metrics.flatMap((m) =>
-            m.avg_ratings.map((r, i) =>
-              dayjs()
-                .subtract(6 - i, "day")
-                .format("YYYY-MM-DD")
-            )
-          )
-        ),
-      ].sort();
+      const uniqueDates = Array.from({ length: 7 }, (_, i) =>
+        dayjs()
+          .subtract(6 - i, "day")
+          .format("YYYY-MM-DD")
+      );
 
       this.ratingChartData.labels = uniqueDates;
 
       metrics.forEach((metric, i) => {
         const ratingMap = new Map(
-          metric.avg_ratings.map((r, i) => [
-            dayjs()
-              .subtract(6 - i, "day")
-              .format("YYYY-MM-DD"),
-            r,
-          ])
+          metric.avg_ratings.map((r) => [r.date, r.avg_rating])
         );
 
         this.ratingChartData.datasets.push({
           label: metric.retailer_title,
           data: uniqueDates.map((date) => ratingMap.get(date) ?? null),
           borderColor: this.chartColors[i % this.chartColors.length],
-          backgroundColor:  `rgba(${i * 50 + 75}, 100, 192, 0.05)`,
+          backgroundColor: `rgba(${i * 50 + 75}, 100, 192, 0.05)`,
           fill: false,
         });
       });
     },
-
-    createPricingCharData(metrics) {
+    createPricingChartData(metrics) {
       this.pricingChartData.datasets = [];
 
-      const uniqueDates = [
-        ...new Set(metrics.flatMap((m) => m.avg_prices.map((p) => p.date))),
-      ].sort();
+      const uniqueDates = Array.from({ length: 7 }, (_, i) =>
+        dayjs()
+          .subtract(6 - i, "day")
+          .format("YYYY-MM-DD")
+      );
 
       this.pricingChartData.labels = uniqueDates;
 
@@ -149,13 +139,13 @@ export default {
           label: metric.retailer_title,
           data: uniqueDates.map((date) => priceMap.get(date) ?? null),
           borderColor: this.chartColors[i % this.chartColors.length],
-          backgroundColor:  `rgba(${i * 50 + 75}, 100, 192, 0.1)`,
+          backgroundColor: `rgba(${i * 50 + 75}, 100, 192, 0.1)`,
           fill: false,
         });
       });
     },
     async downloadCSV() {
-       await downloadMetricsCSV(this.filters.start_date, this.filters.end_date);
+      await downloadMetricsCSV(this.filters.start_date, this.filters.end_date);
     },
   },
   watch: {
@@ -216,20 +206,20 @@ export default {
       </div>
 
       <div class="col-lg-1">
-      <argon-button
-        type="submit"
-        color="success"
-        @click="downloadCSV()"
-       >
+        <argon-button type="submit" color="success" @click="downloadCSV()">
           Export
-       </argon-button>
-        </div>
+        </argon-button>
+      </div>
     </div>
 
     <div class="row mt-4">
       <metric-cards :metrics="metrics" />
     </div>
 
-    <Pagination v-if="pagination.last_page > 1" :pagination="pagination" @setPage="setPage" />
+    <Pagination
+      v-if="pagination.last_page > 1"
+      :pagination="pagination"
+      @setPage="setPage"
+    />
   </div>
 </template>
