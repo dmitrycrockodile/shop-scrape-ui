@@ -40,6 +40,18 @@ export default {
 
         <li class="nav-item">
             <sidenav-item
+              to="/export-raw"
+              :class="getRoute() === 'export-raw' ? 'active' : ''"
+              navText="Scraped data export"
+            >
+              <template v-slot:icon>
+                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+              </template>
+            </sidenav-item>
+        </li>
+
+        <li class="nav-item">
+            <sidenav-item
               to="/products"
               :class="getRoute() === 'products' ? 'active' : ''"
               navText="Products"

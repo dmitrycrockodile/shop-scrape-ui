@@ -21,7 +21,6 @@ export default {
       formData.append("file", this.selectedFile);
       const res = await uploadProductsCSV(formData);
 
-      console.log(res);
       if (!res.success) {
         this.errorMessage = res.errors;
         this.successMessage = "";

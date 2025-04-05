@@ -61,7 +61,7 @@ export default {
 
     <div v-if="!isAuthenticated">
         <router-view />
-      </div>
+    </div>
     
       <div v-else>
         <sidenav v-if="showSidenav" />

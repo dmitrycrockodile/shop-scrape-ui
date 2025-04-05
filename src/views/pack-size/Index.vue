@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       page: 1,
-      dataPerPage: 10,
+      dataPerPage: 30,
       // isPageLoading: true,
       // isProductsLoading: true,
     };

@@ -12,7 +12,6 @@ export const fetchProducts = async (dataPerPage, page) => {
 
     return handleResponse(res);
   } catch (err) {
-    console.log(err);
     return handleError(err);
   }
 };
@@ -133,7 +132,6 @@ export const downloadProductsCSV = async (startDate, endDate, retailers) => {
         },
       );
 
-      console.log(res)
       const contentDisposition = res.headers['content-disposition'];
       let fileName = 'products.csv';
       if (contentDisposition) {

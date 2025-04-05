@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Profile from "../views/Profile.vue";
 import Signin from "../views/Signin.vue";
 
 const routes = [
@@ -109,9 +108,14 @@ const routes = [
     component: () => import("../views/metric/Dashboard.vue"),
   },
   {
-    path: "/profile",
-    name: "Profile",
-    component: Profile,
+    path: "/dashboard",
+    name: "Dashboard",
+    component: () => import("../views/metric/Dashboard.vue"),
+  },
+  {
+    path: "/export-raw",
+    name: "RawExport",
+    component: () => import("../views/metric/RawExport.vue"),
   },
   {
     path: "/signin",

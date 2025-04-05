@@ -3,6 +3,7 @@ import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
 import MetricCards from "@/components/MetricCards.vue";
 import Pagination from "@/components/Pagination.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
+import RetailersSelect from "@/components/RetailersSelect.vue";
 import {
   fetchMetrics,
   fetchWeeklyRatings,
@@ -10,6 +11,7 @@ import {
   downloadMetricsCSV,
 } from "@/services/metricsService";
 import dayjs from "dayjs";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Retailers Metrics Dashboard",
@@ -18,6 +20,7 @@ export default {
     MetricCards,
     Pagination,
     ArgonButton,
+    RetailersSelect,
   },
   mounted() {
     this.handleMetricsFetch();
@@ -31,8 +34,9 @@ export default {
       filters: {
         dataPerPage: 9,
         page: 1,
-        startDate: null,
-        endDate: null,
+        start_date: null,
+        end_date: null,
+        retailers: [],
       },
       ratingChartData: {
         labels: [],
@@ -43,15 +47,15 @@ export default {
         datasets: [],
       },
       chartColors: [
-        "rgba(75, 192, 192, 1)", // blue
-        "rgba(153, 102, 255, 1)", // purple
-        "rgba(255, 159, 64, 1)", // orange
-        "rgba(255, 99, 132, 1)", // red
-        "rgba(54, 162, 235, 1)", // light blue
-        "rgba(255, 205, 86, 1)", // yellow
-        "rgba(231, 76, 60, 1)", // red
-        "rgba(46, 204, 113, 1)", // green
-        "rgba(52, 152, 219, 1)", // blue
+        "rgba(75, 192, 192, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 159, 64, 1)",
+        "rgba(255, 99, 132, 1)",
+        "rgba(54, 162, 235, 1)",
+        "rgba(255, 205, 86, 1)",
+        "rgba(231, 76, 60, 1)",
+        "rgba(46, 204, 113, 1)",
+        "rgba(52, 152, 219, 1)",
       ],
     };
   },
@@ -63,6 +67,7 @@ export default {
     async handleMetricsFetch() {
       try {
         const res = await fetchMetrics(this.filters);
+        console.log(this.filters)
 
         if (res.success) {
           this.metrics = res.data;
@@ -145,13 +150,18 @@ export default {
       });
     },
     async downloadCSV() {
-      await downloadMetricsCSV(this.filters.startDate, this.filters.endDate);
+      await downloadMetricsCSV(this.filters);
     },
   },
   watch: {
     "filters.page": function () {
       this.handleMetricsFetch();
     },
+  },
+  computed: {
+    ...mapGetters({
+      retailers: "retailers/getRetailers",
+    }),
   },
 };
 </script>
@@ -182,22 +192,29 @@ export default {
 
     <div class="row mb-4 mt-5 align-items-end">
       <div class="col-lg-3">
-        <label for="startDate">Start Date:</label>
+        <label for="start_date">Start Date:</label>
         <input
           type="date"
-          id="startDate"
-          v-model="filters.startDate"
+          id="start_date"
+          v-model="filters.start_date"
           class="form-control"
         />
       </div>
       <div class="col-lg-3">
-        <label for="endDate">End Date:</label>
+        <label for="end_date">End Date:</label>
         <input
           type="date"
-          id="endDate"
-          v-model="filters.endDate"
+          id="end_date"
+          v-model="filters.end_date"
           class="form-control"
         />
+      </div>
+      <div class="col-lg-2">
+          <RetailersSelect
+            v-model="filters.retailers"
+            :options="retailers"
+            name="retailers"
+          />
       </div>
       <div class="col-lg-2">
         <button class="btn btn-primary w-100 mb-0" @click="handleMetricsFetch">
@@ -206,7 +223,8 @@ export default {
       </div>
 
       <div class="col-lg-1">
-        <argon-button type="submit" color="success" @click="downloadCSV()">
+        <argon-button type="submit" color="success" class="d-flex align-items-center" @click="downloadCSV()">
+            <i class="fas fa-download me-1"></i>
           Export
         </argon-button>
       </div>

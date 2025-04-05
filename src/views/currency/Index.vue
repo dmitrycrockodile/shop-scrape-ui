@@ -12,7 +12,7 @@ export default {
   data() {
     return {
         page: 1,
-        dataPerPage: 7,
+        dataPerPage: 30,
       // isPageLoading: true,
       // isCurrenciesLoading: true,
     };

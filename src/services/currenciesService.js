@@ -10,7 +10,6 @@ export const fetchCurrencies = async (dataPerPage, page) => {
                 page 
             }
         });
-        console.log(res)
         return handleResponse(res);
     } catch (err) {
         return handleError(err);

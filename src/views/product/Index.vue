@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       page: 1,
-      dataPerPage: 10,
+      dataPerPage: 30,
       showExportModal: false,
       filter: {
         startDate: "",
@@ -56,7 +56,6 @@ export default {
       this.page = newPage;
     },
     async downloadCSV() {
-      console.log("Exporting products with filters:", this.filter);
       this.showExportModal = false;
       await downloadProductsCSV(this.filter.startDate, this.filter.endDate, this.filter.retailers);
     },
@@ -81,7 +80,7 @@ export default {
         <div class="d-flex ps-4">
             <argon-button
               type="submit"
-              color="success"
+              color="info"
               @click="$router.push('/products/import')"
             >
               Import
@@ -94,7 +93,8 @@ export default {
             >
               Create
             </argon-button>
-            <argon-button type="button" color="info" class="ms-3" @click="showExportModal = true">
+            <argon-button type="button" color="success" class="ms-3 d-flex align-items-center" @click="showExportModal = true">
+                <i class="fas fa-download me-1"></i>
                 Export
             </argon-button>
         </div>
