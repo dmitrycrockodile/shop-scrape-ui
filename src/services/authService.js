@@ -19,10 +19,11 @@ export const handleLogin = async (data) => {
 
 export const handleLogout = async () => {
     try {
-        const res = await axios.post(`${BASE_API_URL}/logout`);
+        const res = await axios.delete(`${BASE_API_URL}/logout`);
 
         return handleResponse(res);
     } catch (err) {
+        console.error(err)
         if (err.response.status === 404) {
             router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
         }

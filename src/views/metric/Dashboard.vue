@@ -67,7 +67,6 @@ export default {
     async handleMetricsFetch() {
       try {
         const res = await fetchMetrics(this.filters);
-        console.log(this.filters)
 
         if (res.success) {
           this.metrics = res.data;
