@@ -23,7 +23,6 @@ export const handleLogout = async () => {
 
         return handleResponse(res);
     } catch (err) {
-        console.error(err)
         if (err.response.status === 404) {
             router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
         }

@@ -25,6 +25,10 @@ export default {
   },
   methods: {
     async downloadCSV() {
+        console.log(this.filters.startDate,
+        this.filters.endDate,
+        this.filters.retailers,
+        this.filters.products,)
       await downloadScrapedDataCSV(
         this.filters.startDate,
         this.filters.endDate,

@@ -5,6 +5,7 @@ import { BASE_API_URL } from "../utils/constants";
 export const fetchMetrics = async (data) => {
   try {
     const res = await axios.post(`${BASE_API_URL}/retailers/metrics`, data);
+
     return handleResponse(res);
   } catch (err) {
     return handleError(err);

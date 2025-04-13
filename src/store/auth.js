@@ -20,7 +20,6 @@ const mutations = {
 
 const actions = {
     login({ commit, dispatch }, user) {
-        console.log(user)
         commit('SET_USER', { user });
         dispatch('retailers/setRetailers', user.retailers, { root: true })
     },
@@ -34,8 +33,15 @@ const actions = {
         dispatch('products/setMetaData', [], { root: true });
         dispatch('retailers/setRetailers', [], { root: true });
     },
-    async clearExpiredSession({ commit }) {
+    async clearExpiredSession({ commit, dispatch }) {
         commit('LOGOUT_USER');
+
+        dispatch('users/setUsers', [], { root: true });
+        dispatch('currencies/setCurrencies', [], { root: true });
+        dispatch('packSizes/setPackSizes', [], { root: true });
+        dispatch('products/setProducts', [], { root: true });
+        dispatch('products/setMetaData', [], { root: true });
+        dispatch('retailers/setRetailers', [], { root: true });
     },
 }
 
