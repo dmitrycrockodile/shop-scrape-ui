@@ -1,5 +1,4 @@
 import axios from "axios";
-import router from '../router/index';
 import { handleResponse, handleError } from "../utils/helpers";
 import { BASE_API_URL } from "../utils/constants";
 
@@ -10,9 +9,6 @@ export const handleLogin = async (data) => {
 
         return handleResponse(res);
     } catch (err) {
-        if (err.response.status === 404) {
-            router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
-        }
         return handleError(err);
     }
 }
@@ -23,9 +19,6 @@ export const handleLogout = async () => {
 
         return handleResponse(res);
     } catch (err) {
-        if (err.response.status === 404) {
-            router.push({ name: 'notFound', params: { catchAll: 'not-found' } })
-        }
         return handleError(err);
     }
 }
