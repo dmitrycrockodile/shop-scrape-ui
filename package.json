@@ -15,7 +15,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "cross-env CI=false; cross-env PUBLIC_URL=/ vue-cli-service build",
+    "build": "vite build",
     "lint": "vue-cli-service lint",
     "prettify": "prettier --write ."
   },
@@ -57,7 +57,7 @@
     "sass-loader": "13.3.2",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.5",
-    "vite": "^6.2.3"
+    "vite": "^6.2.6"
   },
   "engines": {
     "node": ">=8 <=21"

@@ -135,7 +135,7 @@ export const downloadProductsCSV = async (startDate, endDate, retailers) => {
       const contentDisposition = res.headers['content-disposition'];
       let fileName = 'products.csv';
       if (contentDisposition) {
-        const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+        const fileNameMatch = contentDisposition.match(/filename=(.+)/);
         if (fileNameMatch && fileNameMatch[1]) {
           fileName = fileNameMatch[1];
         }

@@ -40,9 +40,10 @@ export const downloadMetricsCSV = async (data) => {
     );
 
     const contentDisposition = res.headers["content-disposition"];
+    console.log(contentDisposition)
     let fileName = "metrics.csv";
     if (contentDisposition) {
-      const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+      const fileNameMatch = contentDisposition.match(/filename=(.+)/);
       if (fileNameMatch && fileNameMatch[1]) {
         fileName = fileNameMatch[1];
       }

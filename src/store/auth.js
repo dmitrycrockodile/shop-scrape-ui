@@ -21,6 +21,7 @@ const mutations = {
 const actions = {
     login({ commit, dispatch }, user) {
         commit('SET_USER', { user });
+        console.log(user)
         dispatch('retailers/setRetailers', user.retailers, { root: true })
     },
     async logout({ commit, dispatch }) {

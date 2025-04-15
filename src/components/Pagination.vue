@@ -1,15 +1,15 @@
 <script>
 export default {
-    name: "Pagination",
-    props: {
-        pagination: { type: Object, required: true }
+  name: "Pagination",
+  props: {
+    pagination: { type: Object, required: true },
+  },
+  methods: {
+    setPage(page) {
+      this.$emit("setPage", page);
     },
-    methods: {
-        setPage(page) {
-            this.$emit("setPage", page);
-        },
-    }
-}
+  },
+};
 </script>
 
 <template>
@@ -61,7 +61,7 @@ export default {
   </div>
 </template>
 
-<styles scoped>
+<style scoped>
 .pagination li a {
     margin: 0px 5px 0px;
     display: flex;
@@ -103,4 +103,4 @@ export default {
         line-height: 1.1;
     }
 }
-</styles>
+</style>
