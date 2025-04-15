@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from "path"
 
 export default defineConfig({
-    base: './',
+    base: '/bermas.dmytro.ui.quest.groupbwt.dev/',
     plugins: [ vue() ],
     resolve: {
         alias: {
