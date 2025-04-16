@@ -1,1 +1,1 @@
-export const BASE_API_URL = 'https://bermas.dmytro.api.quest.groupbwt.dev';
+export const BASE_API_URL = 'https://bermas.dmytro.api.quest.groupbwt.dev/api';
