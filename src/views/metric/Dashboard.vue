@@ -166,7 +166,14 @@ export default {
 </script>
 
 <template>
-  <div class="py-4 container-fluid flex-grow-1">
+    <div v-show="!ratingChartData.datasets.length" class="card empty-message p-3 mt-7 me-2">
+        <h5 class="mb-2">
+            It seems like you do not have access to any retailers.
+        </h5>
+        <p>Please contact our administrators to get access to the retailers you want.</p>
+    </div>
+
+  <div class="py-4 container-fluid flex-grow-1 h-100">
     <div class="row">
       <div class="col-lg-6 mb-lg">
         <div v-if="ratingChartData.datasets.length > 0" class="card z-index-2">
@@ -189,7 +196,7 @@ export default {
       </div>
     </div>
 
-    <div class="row mb-4 mt-5 align-items-end">
+    <div v-if="metrics.length" class="row mb-4 mt-5 align-items-end">
       <div class="col-lg-3">
         <label for="start_date">Start Date:</label>
         <input
@@ -209,11 +216,11 @@ export default {
         />
       </div>
       <div class="col-lg-2">
-          <RetailersSelect
-            v-model="filters.retailers"
-            :options="retailers"
-            name="retailers"
-          />
+        <RetailersSelect
+          v-model="filters.retailers"
+          :options="retailers"
+          name="retailers"
+        />
       </div>
       <div class="col-lg-2">
         <button class="btn btn-primary w-100 mb-0" @click="handleMetricsFetch">
@@ -222,8 +229,13 @@ export default {
       </div>
 
       <div class="col-lg-1">
-        <argon-button type="submit" color="success" class="d-flex align-items-center" @click="downloadCSV()">
-            <i class="fas fa-download me-1"></i>
+        <argon-button
+          type="submit"
+          color="success"
+          class="d-flex align-items-center"
+          @click="downloadCSV()"
+        >
+          <i class="fas fa-download me-1"></i>
           Export
         </argon-button>
       </div>
@@ -240,3 +252,9 @@ export default {
     />
   </div>
 </template>
+
+<style scoped>
+.empty-message {
+    height: 20vh;
+}
+</style>
