@@ -4,6 +4,13 @@ export default {
   props: {
     metrics: Array,
   },
+  methods: {
+    handleImageNotFound(e) {
+        e.target.onerror = null;
+        e.target.src =
+        "https://www.notifier.es/templates/yootheme/vendor/yootheme/theme/assets/images/element-image-placeholder.png"; 
+    },
+  }
 };
 </script>
 
@@ -24,7 +31,9 @@ export default {
               <li class="list-group-item">
                 <img
                   :src="metric.retailer_logo"
-                  :alt="`${metric.retailer_title} logo`"
+                  :alt="`${metric.retailer_title}'s logo`"
+                  :title="`${metric.retailer_title}'s logo`"
+                  @error="handleImageNotFound"
                   class="retailer-logo"
                 />
               </li>
