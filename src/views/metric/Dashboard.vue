@@ -24,9 +24,9 @@ export default {
   },
   mounted() {
     if (this.isAuthenticated) {
-        this.handleMetricsFetch();
-        this.handleWeeklyRatingsFetch();
-        this.handleWeeklyPricingssFetch();
+      this.handleMetricsFetch();
+      this.handleWeeklyRatingsFetch();
+      this.handleWeeklyPricingssFetch();
     }
   },
   data() {
@@ -59,6 +59,7 @@ export default {
         "rgba(46, 204, 113, 1)",
         "rgba(52, 152, 219, 1)",
       ],
+      loading: false,
     };
   },
   methods: {
@@ -151,7 +152,14 @@ export default {
       });
     },
     async downloadCSV() {
-      await downloadMetricsCSV(this.filters);
+      this.loading = true;
+      try {
+        await downloadMetricsCSV(this.filters);
+      } catch (error) {
+        console.error("CSV download error:", error);
+      } finally {
+        this.loading = false;
+      }
     },
   },
   watch: {
@@ -169,12 +177,15 @@ export default {
 </script>
 
 <template>
-    <div v-show="!ratingChartData.datasets.length" class="card empty-message p-3 mt-7 me-2">
-        <h5 class="mb-2">
-            It seems like you do not have access to any retailers.
-        </h5>
-        <p>Please contact our administrators to get access to the retailers you want.</p>
-    </div>
+  <div
+    v-show="!ratingChartData.datasets.length"
+    class="card empty-message p-3 mt-7 me-2"
+  >
+    <h5 class="mb-2">It seems like you do not have access to any retailers.</h5>
+    <p>
+      Please contact our administrators to get access to the retailers you want.
+    </p>
+  </div>
 
   <div class="py-4 container-fluid flex-grow-1 h-100">
     <div class="row">
@@ -234,12 +245,14 @@ export default {
       <div class="col-lg-1">
         <argon-button
           type="submit"
+          :disabled="loading"
           color="success"
           class="d-flex align-items-center"
           @click="downloadCSV()"
         >
-          <i class="fas fa-download me-1"></i>
-          Export
+          <i v-if="loading" class="fas fa-spinner fa-spin me-2"></i>
+          <i v-else class="fas fa-download me-1"></i>
+          {{ loading ? "Exporting..." : "Export" }}
         </argon-button>
       </div>
     </div>
@@ -258,6 +271,6 @@ export default {
 
 <style scoped>
 .empty-message {
-    height: 20vh;
+  height: 20vh;
 }
 </style>

@@ -8,6 +8,7 @@ export default {
       selectedFile: null,
       errorMessage: "",
       successMessage: "",
+      loading: false,
     };
   },
   methods: {
@@ -17,6 +18,7 @@ export default {
       this.successMessage = "";
     },
     async handleFileUpload() {
+      this.loading = true;
       const formData = new FormData();
       formData.append("file", this.selectedFile);
       const res = await uploadProductsCSV(formData);
@@ -29,6 +31,7 @@ export default {
         this.successMessage = "CSV imported successfully!";
       }
 
+      this.loading = false;
       this.selectedFile = null;
       this.$refs.fileInput.value = "";
     },
@@ -56,8 +59,14 @@ export default {
               Selected file: <strong>{{ selectedFile.name }}</strong>
             </p>
 
-            <button class="btn btn-success mt-3" @click="handleFileUpload">
-              Upload CSV
+            <button
+              class="btn btn-success mt-3 d-flex align-items-center"
+              @click="handleFileUpload"
+              :disabled="loading"
+            >
+              <i v-if="loading" class="fas fa-spinner fa-spin me-2"></i>
+              <i v-else class="fas fa-upload me-1"></i>
+              {{ loading ? "Uploading..." : "Upload CSV" }}
             </button>
           </div>
           <div class="card-body px-0 pt-0 pb-2 ps-4 pe-2">

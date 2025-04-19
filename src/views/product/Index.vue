@@ -17,6 +17,7 @@ export default {
     return {
       page: 1,
       dataPerPage: 30,
+      loading: false,
       showExportModal: false,
       filter: {
         startDate: "",
@@ -57,12 +58,19 @@ export default {
       this.page = newPage;
     },
     async downloadCSV() {
-      this.showExportModal = false;
-      await downloadProductsCSV(
-        this.filter.startDate,
-        this.filter.endDate,
-        this.filter.retailers
-      );
+      this.loading = true;
+      try {
+        await downloadProductsCSV(
+          this.filter.startDate,
+          this.filter.endDate,
+          this.filter.retailers
+        );
+        this.showExportModal = false;
+      } catch (error) {
+        console.error("CSV export failed:", error);
+      } finally {
+        this.loading = false;
+      }
     },
   },
   watch: {
@@ -143,9 +151,16 @@ export default {
           <argon-button color="secondary" @click="showExportModal = false"
             >Cancel</argon-button
           >
-          <argon-button color="success" @click="downloadCSV" class="ms-2"
-            >Export</argon-button
+          <argon-button
+            color="success"
+            @click="downloadCSV"
+            :disabled="loading"
+            class="ms-2 d-flex align-items-center"
           >
+            <i v-if="loading" class="fas fa-spinner fa-spin me-2"></i>
+            <i v-else class="fas fa-download me-1"></i>
+            {{ loading ? "Exporting..." : "Export" }}
+          </argon-button>
         </div>
       </div>
     </div>

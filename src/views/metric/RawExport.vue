@@ -21,20 +21,23 @@ export default {
   components: {
     ArgonButton,
     RetailersSelect,
-    ProductsSelect
+    ProductsSelect,
   },
   methods: {
     async downloadCSV() {
-        console.log(this.filters.startDate,
-        this.filters.endDate,
-        this.filters.retailers,
-        this.filters.products,)
-      await downloadScrapedDataCSV(
-        this.filters.startDate,
-        this.filters.endDate,
-        this.filters.retailers,
-        this.filters.products,
-      );
+      this.loading = true;
+      try {
+        await downloadScrapedDataCSV(
+          this.filters.startDate,
+          this.filters.endDate,
+          this.filters.retailers,
+          this.filters.products
+        );
+      } catch (err) {
+        console.error("Failed to download CSV:", err);
+      } finally {
+        this.loading = false;
+      }
     },
   },
   computed: {
@@ -69,9 +72,7 @@ export default {
           </div>
 
           <div class="col-md-6 mb-3">
-            <label class="form-control-label"
-              >Retailers</label
-            >
+            <label class="form-control-label">Retailers</label>
             <RetailersSelect
               v-model="filters.retailers"
               :options="retailers"
@@ -80,9 +81,7 @@ export default {
           </div>
 
           <div class="col-md-6 mb-3">
-            <label class="form-control-label"
-              >Products</label
-            >
+            <label class="form-control-label">Products</label>
             <ProductsSelect
               v-model="filters.products"
               :options="products"
@@ -96,9 +95,10 @@ export default {
           :disabled="loading"
           color="success"
           class="d-flex align-items-center"
-          @click="downloadCSV()"
+          @click="downloadCSV"
         >
-          <i class="fas fa-download me-1"></i>
+          <i v-if="loading" class="fas fa-spinner fa-spin me-2"></i>
+          <i v-else class="fas fa-download me-1"></i>
           {{ loading ? "Exporting..." : "Export CSV" }}
         </argon-button>
       </div>
