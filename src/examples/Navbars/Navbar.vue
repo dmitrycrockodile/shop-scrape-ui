@@ -31,8 +31,8 @@ export default {
         const res = await handleLogout();
 
         if (res.success) {
-            this.$router.push({ name: "Signin" })
             this.logout();
+            this.$router.push({ name: "Signin" })
         } 
     },
     closeMenu() {

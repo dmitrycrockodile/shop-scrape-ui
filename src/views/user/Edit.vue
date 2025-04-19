@@ -82,6 +82,7 @@ export default {
                 <label class="form-label">Email</label>
                 <argon-input
                   v-model.trim.lazy="updateUserForm.email"
+                  id="email"
                   type="email"
                   placeholder="Enter email"
                   required
@@ -95,6 +96,7 @@ export default {
                 <label class="form-label">Name</label>
                 <argon-input
                   v-model.trim.lazy="updateUserForm.name"
+                  id="name"
                   type="text"
                   placeholder="Enter name"
                   required
@@ -108,6 +110,7 @@ export default {
                 <label class="form-label">Password</label>
                 <argon-input
                   v-model.trim.lazy="updateUserForm.password"
+                  id="password"
                   type="password"
                   placeholder="Enter password"
                 />
@@ -120,6 +123,7 @@ export default {
                 <label class="form-label">Location</label>
                 <argon-input
                   v-model.trim.lazy="updateUserForm.location"
+                  id="location"
                   type="text"
                   placeholder="Enter location"
                 />

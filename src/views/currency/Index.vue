@@ -7,24 +7,25 @@ import Pagination from "@/components/Pagination.vue";
 export default {
   name: "Currency Index",
   mounted() {
-    this.handleCurrenciesFetch();
+    if (this.isAuthenticated) {
+        this.handleCurrenciesFetch();
+    }
   },
   data() {
     return {
-        page: 1,
-        dataPerPage: 30,
-      // isPageLoading: true,
-      // isCurrenciesLoading: true,
+      page: 1,
+      dataPerPage: 30,
     };
   },
   components: {
     CurrenciesTable,
-    Pagination
+    Pagination,
   },
   computed: {
     ...mapGetters({
       currencies: "currencies/getCurrencies",
       pagination: "packSizes/getMetadata",
+      isAuthenticated: "auth/isAuthenticated",
     }),
   },
   methods: {
@@ -57,7 +58,11 @@ export default {
     <CurrenciesTable :currencies="currencies" />
 
     <div class="mt-4">
-        <Pagination v-if="pagination.last_page > 1" :pagination="pagination" @setPage="setPage" />
+      <Pagination
+        v-if="pagination.last_page > 1"
+        :pagination="pagination"
+        @setPage="setPage"
+      />
     </div>
   </div>
 </template>

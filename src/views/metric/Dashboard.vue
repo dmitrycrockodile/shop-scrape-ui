@@ -23,9 +23,11 @@ export default {
     RetailersSelect,
   },
   mounted() {
-    this.handleMetricsFetch();
-    this.handleWeeklyRatingsFetch();
-    this.handleWeeklyPricingssFetch();
+    if (this.isAuthenticated) {
+        this.handleMetricsFetch();
+        this.handleWeeklyRatingsFetch();
+        this.handleWeeklyPricingssFetch();
+    }
   },
   data() {
     return {
@@ -160,6 +162,7 @@ export default {
   computed: {
     ...mapGetters({
       retailers: "retailers/getRetailers",
+      isAuthenticated: "auth/isAuthenticated",
     }),
   },
 };

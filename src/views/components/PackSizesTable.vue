@@ -76,7 +76,7 @@ export default {
                 <p class="font-weight-bold mb-0">{{ packSize.amount }}</p>
               </td>
               <td class="align-middle">
-                <argon-button @click="handleEdit(packSize.id)" class="p-2 w-50" color="primary"
+                <argon-button @click="handleEdit(packSize.id)" class="p-2 w-25" color="primary"
                   >Edit</argon-button
                 >
                 <argon-button

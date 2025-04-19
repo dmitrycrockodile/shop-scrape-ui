@@ -83,7 +83,7 @@ const getters = {
     },
     getUserRetailers: (state) => (id) => {
         const user = state.users.find(user => user.id == id);
-        return user.retailers ?? [];
+        return user?.retailers ?? [];
     }
 };
 

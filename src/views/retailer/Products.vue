@@ -3,11 +3,14 @@ import ProductDetails from "@/components/ProductDetails.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import Pagination from "@/components/Pagination.vue";
 import { getProducts } from "@/services/retailersService";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Retailer Products",
   mounted() {
-    this.handleGetProducts();
+    if (this.isAuthenticated) {
+      this.handleGetProducts();
+    }
   },
   data() {
     return {
@@ -15,16 +18,17 @@ export default {
       pagination: [],
       page: 1,
       dataPerPage: 9,
-      // isPageLoading: true,
-      // isProductsLoading: true,
     };
   },
   components: {
     ProductDetails,
     ArgonButton,
-    Pagination
+    Pagination,
   },
   computed: {
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated",
+    }),
     retailerId() {
       return this.$route.params.id;
     },
@@ -78,7 +82,11 @@ export default {
           <ProductDetails :products="products" />
         </div>
 
-        <Pagination v-if="pagination.last_page > 1" :pagination="pagination" @setPage="setPage" />
+        <Pagination
+          v-if="pagination.last_page > 1"
+          :pagination="pagination"
+          @setPage="setPage"
+        />
       </div>
     </div>
   </div>

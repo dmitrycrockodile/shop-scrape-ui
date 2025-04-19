@@ -7,13 +7,9 @@ import { fetchUsers, deleteUser } from "@/services/usersService";
 export default {
   name: "Product Index",
   mounted() {
-    this.handleUsersFetch();
-  },
-  data() {
-    return {
-      // isPageLoading: true,
-      // isProductsLoading: true,
-    };
+    if (this.isAuthenticated) {
+      this.handleUsersFetch();
+    }
   },
   components: {
     ArgonButton,
@@ -22,6 +18,7 @@ export default {
   computed: {
     ...mapGetters({
       users: "users/getUsers",
+      isAuthenticated: "auth/isAuthenticated",
     }),
   },
   methods: {

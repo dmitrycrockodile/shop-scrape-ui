@@ -8,14 +8,14 @@ import { fetchPackSizes, deletePackSize } from "@/services/packSizesService";
 export default {
   name: "Product Index",
   mounted() {
-    this.handlePackSizesFetch();
+    if (this.isAuthenticated) {
+        this.handlePackSizesFetch();
+    }
   },
   data() {
     return {
       page: 1,
-      dataPerPage: 30,
-      // isPageLoading: true,
-      // isProductsLoading: true,
+      dataPerPage: 30
     };
   },
   components: {
@@ -28,6 +28,7 @@ export default {
       packSizes: "packSizes/getPackSizes",
       pagination: "packSizes/getMetadata",
       isAdmin: "auth/isAdmin",
+      isAuthenticated: "auth/isAuthenticated",
     }),
   },
   methods: {

@@ -9,7 +9,9 @@ import RetailersSelect from "@/components/RetailersSelect.vue";
 export default {
   name: "Product Index",
   mounted() {
-    this.handleProductsFetch();
+    if (this.isAuthenticated) {
+      this.handleProductsFetch();
+    }
   },
   data() {
     return {
@@ -21,22 +23,21 @@ export default {
         endDate: "",
         retailers: [],
       },
-      RetailersSelect
-      // isPageLoading: true,
-      // isProductsLoading: true,
+      RetailersSelect,
     };
   },
   components: {
     ArgonButton,
     ProductsTable,
     Pagination,
-    RetailersSelect
+    RetailersSelect,
   },
   computed: {
     ...mapGetters({
       products: "products/getProducts",
       pagination: "products/getMetadata",
       retailers: "retailers/getRetailers",
+      isAuthenticated: "auth/isAuthenticated",
     }),
   },
   methods: {
@@ -57,7 +58,11 @@ export default {
     },
     async downloadCSV() {
       this.showExportModal = false;
-      await downloadProductsCSV(this.filter.startDate, this.filter.endDate, this.filter.retailers);
+      await downloadProductsCSV(
+        this.filter.startDate,
+        this.filter.endDate,
+        this.filter.retailers
+      );
     },
   },
   watch: {
@@ -78,25 +83,30 @@ export default {
       </div>
       <div class="card-body px-0 pt-0 pb-2">
         <div class="d-flex ps-4">
-            <argon-button
-              type="submit"
-              color="info"
-              @click="$router.push('/products/import')"
-            >
-              Import
-            </argon-button>
-            <argon-button
-              type="submit"
-              color="primary"
-              class="ms-3"
-              @click="$router.push('/products/create')"
-            >
-              Create
-            </argon-button>
-            <argon-button type="button" color="success" class="ms-3 d-flex align-items-center" @click="showExportModal = true">
-                <i class="fas fa-download me-1"></i>
-                Export
-            </argon-button>
+          <argon-button
+            type="submit"
+            color="info"
+            @click="$router.push('/products/import')"
+          >
+            Import
+          </argon-button>
+          <argon-button
+            type="submit"
+            color="primary"
+            class="ms-3"
+            @click="$router.push('/products/create')"
+          >
+            Create
+          </argon-button>
+          <argon-button
+            type="button"
+            color="success"
+            class="ms-3 d-flex align-items-center"
+            @click="showExportModal = true"
+          >
+            <i class="fas fa-download me-1"></i>
+            Export
+          </argon-button>
         </div>
 
         <h6 v-if="!products.length" class="ps-4">
@@ -114,54 +124,58 @@ export default {
     </div>
 
     <div v-if="showExportModal" class="modal-overlay">
-        <div class="modal-content">
-          <h5>Export Products</h5>
-          <label class="form-label">Start Date</label>
-          <input type="date" v-model="filter.startDate" class="form-control" />
-  
-          <label class="form-label mt-2">End Date</label>
-          <input type="date" v-model="filter.endDate" class="form-control" />
-  
-          <label class="form-label mt-2">Retailers</label>
-         <RetailersSelect 
-         v-model="filter.retailers"
-        :options="retailers"
-        name="retailers"
-         />
-  
-          <div class="modal-buttons mt-3">
-            <argon-button color="secondary" @click="showExportModal = false">Cancel</argon-button>
-            <argon-button color="success" @click="downloadCSV" class="ms-2">Export</argon-button>
-          </div>
+      <div class="modal-content">
+        <h5>Export Products</h5>
+        <label class="form-label">Start Date</label>
+        <input type="date" v-model="filter.startDate" class="form-control" />
+
+        <label class="form-label mt-2">End Date</label>
+        <input type="date" v-model="filter.endDate" class="form-control" />
+
+        <label class="form-label mt-2">Retailers</label>
+        <RetailersSelect
+          v-model="filter.retailers"
+          :options="retailers"
+          name="retailers"
+        />
+
+        <div class="modal-buttons mt-3">
+          <argon-button color="secondary" @click="showExportModal = false"
+            >Cancel</argon-button
+          >
+          <argon-button color="success" @click="downloadCSV" class="ms-2"
+            >Export</argon-button
+          >
         </div>
       </div>
+    </div>
   </div>
 </template>
 
 <style>
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-  }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  .modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
 </style>
