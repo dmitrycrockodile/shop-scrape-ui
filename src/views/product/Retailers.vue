@@ -6,7 +6,7 @@ import RetailersTable from "../components/RetailersTable.vue";
 export default {
   name: "Product Retailers",
   components: {
-    RetailersTable,
+    RetailersTable
   },
   data() {
     return {
@@ -29,11 +29,9 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid py-4 flex-grow-1">
-    <div class="row">
-      <div class="col-md-8 mx-auto">
-        <RetailersTable :retailers="retailers" :showActions="false" />
-      </div>
+  <div class="container-fluid pt-6 pb-4 flex-grow-1">
+    <div class="card mx-auto">
+      <RetailersTable :retailers="retailers" :showActions="false" />
     </div>
   </div>
 </template>

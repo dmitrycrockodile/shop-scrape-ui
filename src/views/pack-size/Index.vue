@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-  <div class="pt-6 pb-4 flex-grow-1">
+  <div class="container-fluid pt-6 pb-4 flex-grow-1">
     <PackSizesTable
       :packSizes="packSizes"
       :showActions="isAdmin"

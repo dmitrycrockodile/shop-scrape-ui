@@ -179,12 +179,17 @@ export default {
 <template>
   <div
     v-show="!ratingChartData.datasets.length"
-    class="card empty-message p-3 mt-7 me-2"
+    class="container-fluid flex-grow-1 mt-7 me-2"
   >
-    <h5 class="mb-2">It seems like you do not have access to any retailers.</h5>
-    <p>
-      Please contact our administrators to get access to the retailers you want.
-    </p>
+    <div class="card p-3 empty-message">
+      <h5 class="mb-2">
+        It seems like you do not have access to any retailers.
+      </h5>
+      <p>
+        Please contact our administrators to get access to the retailers you
+        want.
+      </p>
+    </div>
   </div>
 
   <div class="py-4 container-fluid flex-grow-1 h-100">

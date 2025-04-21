@@ -102,6 +102,7 @@ export default {
   border: 1px solid #5e72e4;
   border-radius: 5px;
   background: #fff;
+  text-align: left;
 }
 
 .dropdown__selected-option {

@@ -115,7 +115,6 @@ export default {
                     >Retailers</argon-button
                   >
                   <argon-button
-                    v-if="isAdmin"
                     color="warning"
                     @click="handleDelete(product.id)"
                     class="ms-2"

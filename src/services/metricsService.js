@@ -5,7 +5,7 @@ import { BASE_API_URL } from "../utils/constants";
 export const fetchMetrics = async (data) => {
   try {
     const res = await axios.post(`${BASE_API_URL}/retailers/metrics`, data);
-
+    
     return handleResponse(res);
   } catch (err) {
     return handleError(err);
@@ -40,7 +40,7 @@ export const downloadMetricsCSV = async (data) => {
     );
 
     const contentDisposition = res.headers["content-disposition"];
-    console.log(contentDisposition)
+    
     let fileName = "metrics.csv";
     if (contentDisposition) {
       const fileNameMatch = contentDisposition.match(/filename=(.+)/);

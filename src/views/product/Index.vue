@@ -82,7 +82,7 @@ export default {
 </script>
 
 <template>
-  <div class="pt-6 pb-4 flex-grow-1">
+  <div class="container-fluid pt-6 pb-4 flex-grow-1">
     <div class="card">
       <div
         class="card-header pb-3 d-flex align-items-center justify-content-between"
@@ -116,10 +116,6 @@ export default {
             Export
           </argon-button>
         </div>
-
-        <h6 v-if="!products.length" class="ps-4">
-          You do not have any products
-        </h6>
         <div class="table-responsive p-0">
           <ProductsTable :products="products" />
         </div>

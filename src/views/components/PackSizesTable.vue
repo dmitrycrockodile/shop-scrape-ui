@@ -80,9 +80,8 @@ export default {
                   >Edit</argon-button
                 >
                 <argon-button
-                  v-if="isAdmin"
                   color="warning"
-                  class="ms-2 p-2"
+                  class="ms-2 p-2 w-25"
                   @click="handleDelete(packSize.id)"
                   >Delete</argon-button
                 >

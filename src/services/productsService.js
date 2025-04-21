@@ -64,7 +64,6 @@ export const createProduct = async (data, images) => {
     }
 
     const res = await axios.post(`${BASE_API_URL}/products/store`, formData);
-
     return handleResponse(res);
   } catch (err) {
     console.error(err);
@@ -121,35 +120,37 @@ export const uploadProductsCSV = async (formData) => {
 };
 
 export const downloadProductsCSV = async (startDate, endDate, retailers) => {
-    try {
-      const res = await axios.post(`${BASE_API_URL}/products/export`, {
-          startDate,
-          endDate,
-          retailers
-        },
-        {
-            responseType: 'blob'
-        },
-      );
-
-      const contentDisposition = res.headers['content-disposition'];
-      let fileName = 'products.csv';
-      if (contentDisposition) {
-        const fileNameMatch = contentDisposition.match(/filename=(.+)/);
-        if (fileNameMatch && fileNameMatch[1]) {
-          fileName = fileNameMatch[1];
-        }
+  try {
+    const res = await axios.post(
+      `${BASE_API_URL}/products/export`,
+      {
+        startDate,
+        endDate,
+        retailers,
+      },
+      {
+        responseType: "blob",
       }
-    
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(res.data);
-      link.download = fileName;    
-      link.click();
-  
-      window.URL.revokeObjectURL(link.href);
+    );
 
-      return res;
-    } catch (err) {
-      console.error('CSV Download Error:', err);
+    const contentDisposition = res.headers["content-disposition"];
+    let fileName = "products.csv";
+    if (contentDisposition) {
+      const fileNameMatch = contentDisposition.match(/filename=(.+)/);
+      if (fileNameMatch && fileNameMatch[1]) {
+        fileName = fileNameMatch[1];
+      }
     }
-  };
+
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(res.data);
+    link.download = fileName;
+    link.click();
+
+    window.URL.revokeObjectURL(link.href);
+
+    return res;
+  } catch (err) {
+    console.error("CSV Download Error:", err);
+  }
+};
