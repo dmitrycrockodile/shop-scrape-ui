@@ -60,6 +60,7 @@ export default {
         "rgba(52, 152, 219, 1)",
       ],
       loading: false,
+      filtersLoading: false,
     };
   },
   methods: {
@@ -68,6 +69,7 @@ export default {
       this.handleMetricsFetch();
     },
     async handleMetricsFetch() {
+        this.filtersLoading = true;
       try {
         const res = await fetchMetrics(this.filters);
 
@@ -78,6 +80,8 @@ export default {
       } catch (error) {
         console.error("Error fetching metrics:", error);
       }
+
+      this.filtersLoading = false;
     },
     async handleWeeklyRatingsFetch() {
       try {
@@ -178,16 +182,15 @@ export default {
 
 <template>
   <div
-    v-show="!ratingChartData.datasets.length"
+    v-show="!metrics.length"
     class="container-fluid flex-grow-1 mt-7 me-2"
   >
     <div class="card p-3 empty-message">
       <h5 class="mb-2">
-        It seems like you do not have access to any retailers.
+        It seems like you do not have access to any metrics (or they are loading).
       </h5>
       <p>
-        Please contact our administrators to get access to the retailers you
-        want.
+        Please wait or contact our administrators to get access you want.
       </p>
     </div>
   </div>
@@ -195,7 +198,7 @@ export default {
   <div class="py-4 container-fluid flex-grow-1 h-100">
     <div class="row">
       <div class="col-lg-6 mb-lg">
-        <div v-if="ratingChartData.datasets.length > 0" class="card z-index-2">
+        <div v-if="ratingChartData.datasets.length > 0 && metrics.length" class="card z-index-2">
           <gradient-line-chart
             id="rating-charts"
             title="Weekly Ratings Overview"
@@ -205,7 +208,7 @@ export default {
       </div>
 
       <div class="col-lg-6 mb-lg">
-        <div v-if="pricingChartData.datasets.length > 0" class="card z-index-2">
+        <div v-if="pricingChartData.datasets.length > 0 && metrics.length" class="card z-index-2">
           <gradient-line-chart
             id="pricing-charts"
             title="Weekly Pricing Overview"
@@ -242,8 +245,10 @@ export default {
         />
       </div>
       <div class="col-lg-2">
-        <button class="btn btn-primary w-100 mb-0" @click="handleMetricsFetch">
-          Apply Filter
+        <button class="btn btn-primary w-100 mb-0" :disabled="filtersLoading" @click="handleMetricsFetch">
+            <i v-if="filtersLoading" class="fas fa-spinner fa-spin me-2"></i>
+            <i v-else class="fas fa-download me-1"></i>
+            {{ filtersLoading ? "Applying..." : "Apply Filter" }}
         </button>
       </div>
 

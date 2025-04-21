@@ -16,11 +16,11 @@ export default {
   <div v-if="pagination.last_page > 1" class="row">
     <div class="col-12 d-flex justify-content-center wow fadeInUp animated">
       <ul class="pagination text-center">
-        <!-- <li v-if="pagination.current_page !== 1" class="next">
+        <li v-if="pagination.current_page !== 1" class="next">
           <a @click.prevent="setPage(1)" href="#0">
             <i class="fa-solid fa-arrow-left"></i>
           </a>
-        </li> -->
+        </li>
         <template v-for="link in pagination.links" :key="link.label">
           <template v-if="Number(link.label)">
             <li
@@ -48,14 +48,14 @@ export default {
             </li>
           </template>
         </template>
-        <!-- <li
+        <li
           v-if="pagination.current_page !== pagination.last_page"
           class="next"
         >
           <a @click.prevent="setPage(pagination.current_page + 1)" href="#0">
             <i class="fa-solid fa-arrow-right"></i>
           </a>
-        </li> -->
+        </li>
       </ul>
     </div>
   </div>

@@ -15,6 +15,7 @@ export const fetchMetrics = async (data) => {
 export const fetchWeeklyRatings = async () => {
   try {
     const res = await axios.get(`${BASE_API_URL}/retailers/weekly-ratings`);
+    console.log(res);
     return handleResponse(res);
   } catch (err) {
     return handleError(err);
